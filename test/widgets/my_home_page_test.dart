@@ -10,22 +10,26 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:uchi_sake/widgets/my_home_page.dart';
 
+import '../test_helper.dart';
+
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    const myHomePage = MyHomePage(title: 'タイトル');
-    await tester.pumpWidget(const MaterialApp(home: myHomePage));
+  wrapTest(() {
+    testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+      // Build our app and trigger a frame.
+      const myHomePage = MyHomePage(title: 'タイトル');
+      await tester.pumpWidget(MaterialApp(home: myHomePage));
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+      // Verify that our counter starts at 0.
+      expect(find.text('0'), findsOneWidget);
+      expect(find.text('1'), findsNothing);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+      // Tap the '+' icon and trigger a frame.
+      await tester.tap(find.byIcon(Icons.add));
+      await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+      // Verify that our counter has incremented.
+      expect(find.text('0'), findsNothing);
+      expect(find.text('1'), findsOneWidget);
+    });
   });
 }
