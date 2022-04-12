@@ -32,16 +32,19 @@ class _MemoListPageState extends State<MemoListPage> {
       appBar: AppBar(
         title: const Text('飲んだお酒のメモ'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            Text(
-              'To Do',
-            ),
-          ],
-        ),
-      ),
+      body: memos.isEmpty
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const <Widget>[
+                  Text('まだありません。'),
+                ],
+              ),
+            )
+          : ListView(
+              children: memos.map((Memo memo) {
+              return Card(child: Text(memo.name));
+            }).toList()),
       floatingActionButton: FloatingActionButton(
         onPressed: _createMemo,
         tooltip: 'メモを追加します。',
