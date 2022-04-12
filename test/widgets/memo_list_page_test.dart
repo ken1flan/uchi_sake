@@ -6,6 +6,6 @@ void main() {
   testWidgets('メモ一覧ページのテスト', (WidgetTester tester) async {
     await tester.pumpWidget(const MyApp());
 
-    expect(find.text('To Do'), findsOneWidget);
+    expect(find.text('飲んだお酒のメモ'), findsOneWidget);
   });
 }
