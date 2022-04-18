@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_const
-
 import 'package:flutter/material.dart';
 import 'package:uchi_sake/models/memo.dart';
 
@@ -11,7 +9,7 @@ class MemoListPage extends StatefulWidget {
 }
 
 class _MemoListPageState extends State<MemoListPage> {
-  static const star = const Icon(
+  static const star = Icon(
     Icons.star,
     color: Color.fromRGBO(253, 216, 53, 1),
     size: 15,
