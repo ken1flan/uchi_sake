@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uchi_sake/models/memo.dart';
+import 'package:uchi_sake/widgets/memo_edit_page.dart';
 
 class MemoListPage extends StatefulWidget {
   const MemoListPage({Key? key}) : super(key: key);
@@ -27,8 +28,13 @@ class _MemoListPageState extends State<MemoListPage> {
     }
   }
 
-  void _createMemo() {
-    // TODO: 新規メモ作成ページを表示
+  void _createMemo() async {
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MemoEditPage(),
+        ));
+    setState(() {});
   }
 
   @override
