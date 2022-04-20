@@ -1,7 +1,6 @@
-// ignore_for_file: unnecessary_const
-
 import 'package:flutter/material.dart';
 import 'package:uchi_sake/models/memo.dart';
+import 'package:uchi_sake/widgets/memo_edit_page.dart';
 
 class MemoListPage extends StatefulWidget {
   const MemoListPage({Key? key}) : super(key: key);
@@ -11,7 +10,7 @@ class MemoListPage extends StatefulWidget {
 }
 
 class _MemoListPageState extends State<MemoListPage> {
-  static const star = const Icon(
+  static const star = Icon(
     Icons.star,
     color: Color.fromRGBO(253, 216, 53, 1),
     size: 15,
@@ -29,8 +28,13 @@ class _MemoListPageState extends State<MemoListPage> {
     }
   }
 
-  void _createMemo() {
-    // TODO: 新規メモ作成ページを表示
+  void _createMemo(BuildContext context) async {
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MemoEditPage(),
+        ));
+    setState(() {});
   }
 
   @override
@@ -92,7 +96,7 @@ class _MemoListPageState extends State<MemoListPage> {
               );
             }).toList()),
       floatingActionButton: FloatingActionButton(
-        onPressed: _createMemo,
+        onPressed: () => _createMemo(context),
         tooltip: 'メモを追加します。',
         child: const Icon(Icons.add),
       ),
