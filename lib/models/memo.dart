@@ -8,6 +8,8 @@ class Memo {
   late String shopName;
   late DateTime tappedOn;
   late List<String> keywords;
+  late String keywordsString;
   late int score;
+  late String purchaceStore;
   late String body;
 }

@@ -28,7 +28,7 @@ class _MemoListPageState extends State<MemoListPage> {
     }
   }
 
-  void _createMemo() async {
+  void _createMemo(BuildContext context) async {
     await Navigator.push(
         context,
         MaterialPageRoute(
@@ -96,7 +96,7 @@ class _MemoListPageState extends State<MemoListPage> {
               );
             }).toList()),
       floatingActionButton: FloatingActionButton(
-        onPressed: _createMemo,
+        onPressed: () => _createMemo(context),
         tooltip: 'メモを追加します。',
         child: const Icon(Icons.add),
       ),
