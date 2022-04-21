@@ -26,64 +26,65 @@ class _MemoEditPageState extends State<MemoEditPage> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(16),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            InkWell(
-              child: Text(
-                  "開栓日 ${memo.tappedOn.year}/${memo.tappedOn.month}/${memo.tappedOn.day}"),
-              onTap: () async {
-                DateTime? picked = await _selectDate(memo, context);
-                if (picked != null) {
-                  setState(() {
-                    memo.tappedOn = picked;
-                    // TODO: 保存
-                  });
-                }
-              },
-            ),
-            const SizedBox(height: 15),
-            TextFormField(
-              initialValue: memo.name,
-              key: const ValueKey('memoNameTextField'),
-              decoration: const InputDecoration(
-                labelText: '名前',
+          child: ListView(
+            children: [
+              InkWell(
+                child: Text(
+                    "開栓日 ${memo.tappedOn.year}/${memo.tappedOn.month}/${memo.tappedOn.day}"),
+                onTap: () async {
+                  DateTime? picked = await _selectDate(memo, context);
+                  if (picked != null) {
+                    setState(() {
+                      memo.tappedOn = picked;
+                      // TODO: 保存
+                    });
+                  }
+                },
               ),
-              onChanged: (value) {
-                // TODO: 保存
-              },
-            ),
-            TextFormField(
-              initialValue: memo.purchaceStore,
-              key: const ValueKey('memoPurchaseStoreTextField'),
-              decoration: const InputDecoration(
-                labelText: '買ったお店',
+              const SizedBox(height: 15),
+              TextFormField(
+                initialValue: memo.name,
+                key: const ValueKey('memoNameTextField'),
+                decoration: const InputDecoration(
+                  labelText: '名前',
+                ),
+                onChanged: (value) {
+                  // TODO: 保存
+                },
               ),
-              onChanged: (value) {
-                // TODO: 保存
-              },
-            ),
-            TextFormField(
-              initialValue: memo.keywordsString,
-              key: const ValueKey('memoKeywordsStringTextField'),
-              decoration: const InputDecoration(
-                labelText: 'キーワード',
+              TextFormField(
+                initialValue: memo.purchaceStore,
+                key: const ValueKey('memoPurchaseStoreTextField'),
+                decoration: const InputDecoration(
+                  labelText: '買ったお店',
+                ),
+                onChanged: (value) {
+                  // TODO: 保存
+                },
               ),
-              onChanged: (value) {
-                // TODO: 保存
-              },
-            ),
-            TextFormField(
-              initialValue: memo.body,
-              key: const ValueKey('memoBodyTextField'),
-              decoration: const InputDecoration(
-                labelText: 'メモ',
+              TextFormField(
+                initialValue: memo.keywordsString,
+                key: const ValueKey('memoKeywordsStringTextField'),
+                decoration: const InputDecoration(
+                  labelText: 'キーワード',
+                ),
+                onChanged: (value) {
+                  // TODO: 保存
+                },
               ),
-              maxLines: 15,
-              onChanged: (value) {
-                // TODO: 保存
-              },
-            ),
-          ]),
+              TextFormField(
+                initialValue: memo.body,
+                key: const ValueKey('memoBodyTextField'),
+                decoration: const InputDecoration(
+                  labelText: 'メモ',
+                ),
+                maxLines: 15,
+                onChanged: (value) {
+                  // TODO: 保存
+                },
+              ),
+            ],
+          ),
         ));
   }
 
