@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
+import 'package:uchi_sake/common.dart';
 import 'package:uchi_sake/models/memo.dart';
 import 'package:uchi_sake/widgets/memo_edit_page.dart';
 
@@ -17,17 +19,6 @@ class _MemoListPageState extends State<MemoListPage> {
   );
   List<Memo> memos = [];
 
-  void _setTestMemos() {
-    memos = [];
-    for (int i = 0; i < 10; i++) {
-      Memo memo = Memo();
-      memo.name = "お酒${i.toString()}";
-      memo.tappedOn = DateTime.now();
-      memo.score = i % 5 + 1;
-      memos.add(memo);
-    }
-  }
-
   void _createMemo(BuildContext context) async {
     await Navigator.push(
         context,
@@ -39,7 +30,7 @@ class _MemoListPageState extends State<MemoListPage> {
 
   @override
   Widget build(BuildContext context) {
-    _setTestMemos();
+    var memos = isar.memos.where().findAllSync();
     return Scaffold(
       appBar: AppBar(
         title: const Text('飲んだお酒のメモ'),
