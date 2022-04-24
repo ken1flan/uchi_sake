@@ -5,7 +5,6 @@ class Memo {
   late File labelImage;
   late File specImage;
   late File otherImage;
-  late String shopName;
   late DateTime tappedOn;
   late List<String> keywords;
   late String keywordsString;
