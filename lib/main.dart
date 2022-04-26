@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:uchi_sake/common.dart';
 import 'package:uchi_sake/widgets/memo_list_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Common.initialize();
+  // サンプル投入
+  // Common.addSampleMemo();
   runApp(const MyApp());
 }
 

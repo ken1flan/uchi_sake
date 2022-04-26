@@ -1,8 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'supports/common_support.dart';
+import 'supports/isar_support.dart';
 
 void wrapTest(void Function() example) {
   setUpAll(() {
-    // 全体で一度だけセットアップ
+    CommonSupport.setUpAll();
+    IsarSupport.setupAll();
   });
 
   setUp(() {
@@ -12,10 +15,10 @@ void wrapTest(void Function() example) {
   example();
 
   tearDown(() {
-    // テストごと終了処理
+    IsarSupport.tearDown();
   });
 
   tearDownAll(() {
-    // 全体で一度だけ終了処理
+    CommonSupport.finalize();
   });
 }
