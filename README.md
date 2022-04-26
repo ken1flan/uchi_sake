@@ -14,3 +14,19 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## 開発
+### セットアップ
+#### Flutter
+[Flutter](https://flutter.dev/)を参照してください。
+#### Isarのインストール
+手元の環境でテストを動かすためにはIsarのコアライブラリをダウンロードする必要があります。
+
+##### MacOS
+[テストのセットアップスクリプト](https://github.com/isar/isar/blob/main/packages/isar_test/tool/setup_tests.sh)を参考に、プロジェクトルートにライブラリのバイナリをコピーしてきます。
+
+```console
+core_version=`cat .isar_version`
+github="https://github.com/isar/isar-core/releases/download/${core_version}"
+curl "${github}/libisar_macos_x64.dylib" -o ./libisar.dylib --create-dirs -L
+```
