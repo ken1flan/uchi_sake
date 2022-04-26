@@ -62,32 +62,29 @@ class _MemoWebAdapter extends IsarWebTypeAdapter<Memo> {
     IsarNative.jsObjectSet(jsObj, 'purchaceStore', object.purchaceStore);
     IsarNative.jsObjectSet(jsObj, 'score', object.score);
     IsarNative.jsObjectSet(
-        jsObj, 'tappedOn', object.tappedOn.toUtc().millisecondsSinceEpoch);
+        jsObj, 'tappedOn', object.tappedOn?.toUtc().millisecondsSinceEpoch);
     return jsObj;
   }
 
   @override
   Memo deserialize(IsarCollection<Memo> collection, dynamic jsObj) {
     final object = Memo();
-    object.body = IsarNative.jsObjectGet(jsObj, 'body') ?? '';
+    object.body = IsarNative.jsObjectGet(jsObj, 'body');
     object.id = IsarNative.jsObjectGet(jsObj, 'id');
     object.keywords = (IsarNative.jsObjectGet(jsObj, 'keywords') as List?)
-            ?.map((e) => e ?? '')
-            .toList()
-            .cast<String>() ??
-        [];
-    object.keywordsString =
-        IsarNative.jsObjectGet(jsObj, 'keywordsString') ?? '';
+        ?.map((e) => e ?? '')
+        .toList()
+        .cast<String>();
+    object.keywordsString = IsarNative.jsObjectGet(jsObj, 'keywordsString');
     object.name = IsarNative.jsObjectGet(jsObj, 'name') ?? '';
-    object.purchaceStore = IsarNative.jsObjectGet(jsObj, 'purchaceStore') ?? '';
-    object.score =
-        IsarNative.jsObjectGet(jsObj, 'score') ?? double.negativeInfinity;
+    object.purchaceStore = IsarNative.jsObjectGet(jsObj, 'purchaceStore');
+    object.score = IsarNative.jsObjectGet(jsObj, 'score');
     object.tappedOn = IsarNative.jsObjectGet(jsObj, 'tappedOn') != null
         ? DateTime.fromMillisecondsSinceEpoch(
                 IsarNative.jsObjectGet(jsObj, 'tappedOn'),
                 isUtc: true)
             .toLocal()
-        : DateTime.fromMillisecondsSinceEpoch(0);
+        : null;
     return object;
   }
 
@@ -95,31 +92,29 @@ class _MemoWebAdapter extends IsarWebTypeAdapter<Memo> {
   P deserializeProperty<P>(Object jsObj, String propertyName) {
     switch (propertyName) {
       case 'body':
-        return (IsarNative.jsObjectGet(jsObj, 'body') ?? '') as P;
+        return (IsarNative.jsObjectGet(jsObj, 'body')) as P;
       case 'id':
         return (IsarNative.jsObjectGet(jsObj, 'id')) as P;
       case 'keywords':
         return ((IsarNative.jsObjectGet(jsObj, 'keywords') as List?)
-                ?.map((e) => e ?? '')
-                .toList()
-                .cast<String>() ??
-            []) as P;
+            ?.map((e) => e ?? '')
+            .toList()
+            .cast<String>()) as P;
       case 'keywordsString':
-        return (IsarNative.jsObjectGet(jsObj, 'keywordsString') ?? '') as P;
+        return (IsarNative.jsObjectGet(jsObj, 'keywordsString')) as P;
       case 'name':
         return (IsarNative.jsObjectGet(jsObj, 'name') ?? '') as P;
       case 'purchaceStore':
-        return (IsarNative.jsObjectGet(jsObj, 'purchaceStore') ?? '') as P;
+        return (IsarNative.jsObjectGet(jsObj, 'purchaceStore')) as P;
       case 'score':
-        return (IsarNative.jsObjectGet(jsObj, 'score') ??
-            double.negativeInfinity) as P;
+        return (IsarNative.jsObjectGet(jsObj, 'score')) as P;
       case 'tappedOn':
         return (IsarNative.jsObjectGet(jsObj, 'tappedOn') != null
             ? DateTime.fromMillisecondsSinceEpoch(
                     IsarNative.jsObjectGet(jsObj, 'tappedOn'),
                     isUtc: true)
                 .toLocal()
-            : DateTime.fromMillisecondsSinceEpoch(0)) as P;
+            : null) as P;
       default:
         throw 'Illegal propertyName';
     }
@@ -137,26 +132,38 @@ class _MemoNativeAdapter extends IsarNativeTypeAdapter<Memo> {
       Memo object, int staticSize, List<int> offsets, AdapterAlloc alloc) {
     var dynamicSize = 0;
     final value0 = object.body;
-    final _body = IsarBinaryWriter.utf8Encoder.convert(value0);
-    dynamicSize += (_body.length) as int;
+    IsarUint8List? _body;
+    if (value0 != null) {
+      _body = IsarBinaryWriter.utf8Encoder.convert(value0);
+    }
+    dynamicSize += (_body?.length ?? 0) as int;
     final value1 = object.keywords;
-    dynamicSize += (value1.length) * 8;
-    final bytesList1 = <IsarUint8List>[];
-    for (var str in value1) {
-      final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-      bytesList1.add(bytes);
-      dynamicSize += bytes.length as int;
+    dynamicSize += (value1?.length ?? 0) * 8;
+    List<IsarUint8List?>? bytesList1;
+    if (value1 != null) {
+      bytesList1 = [];
+      for (var str in value1) {
+        final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
+        bytesList1.add(bytes);
+        dynamicSize += bytes.length as int;
+      }
     }
     final _keywords = bytesList1;
     final value2 = object.keywordsString;
-    final _keywordsString = IsarBinaryWriter.utf8Encoder.convert(value2);
-    dynamicSize += (_keywordsString.length) as int;
+    IsarUint8List? _keywordsString;
+    if (value2 != null) {
+      _keywordsString = IsarBinaryWriter.utf8Encoder.convert(value2);
+    }
+    dynamicSize += (_keywordsString?.length ?? 0) as int;
     final value3 = object.name;
     final _name = IsarBinaryWriter.utf8Encoder.convert(value3);
     dynamicSize += (_name.length) as int;
     final value4 = object.purchaceStore;
-    final _purchaceStore = IsarBinaryWriter.utf8Encoder.convert(value4);
-    dynamicSize += (_purchaceStore.length) as int;
+    IsarUint8List? _purchaceStore;
+    if (value4 != null) {
+      _purchaceStore = IsarBinaryWriter.utf8Encoder.convert(value4);
+    }
+    dynamicSize += (_purchaceStore?.length ?? 0) as int;
     final value5 = object.score;
     final _score = value5;
     final value6 = object.tappedOn;
@@ -180,14 +187,14 @@ class _MemoNativeAdapter extends IsarNativeTypeAdapter<Memo> {
   Memo deserialize(IsarCollection<Memo> collection, int id,
       IsarBinaryReader reader, List<int> offsets) {
     final object = Memo();
-    object.body = reader.readString(offsets[0]);
+    object.body = reader.readStringOrNull(offsets[0]);
     object.id = id;
-    object.keywords = reader.readStringList(offsets[1]) ?? [];
-    object.keywordsString = reader.readString(offsets[2]);
+    object.keywords = reader.readStringList(offsets[1]);
+    object.keywordsString = reader.readStringOrNull(offsets[2]);
     object.name = reader.readString(offsets[3]);
-    object.purchaceStore = reader.readString(offsets[4]);
-    object.score = reader.readLong(offsets[5]);
-    object.tappedOn = reader.readDateTime(offsets[6]);
+    object.purchaceStore = reader.readStringOrNull(offsets[4]);
+    object.score = reader.readLongOrNull(offsets[5]);
+    object.tappedOn = reader.readDateTimeOrNull(offsets[6]);
     return object;
   }
 
@@ -198,19 +205,19 @@ class _MemoNativeAdapter extends IsarNativeTypeAdapter<Memo> {
       case -1:
         return id as P;
       case 0:
-        return (reader.readString(offset)) as P;
+        return (reader.readStringOrNull(offset)) as P;
       case 1:
-        return (reader.readStringList(offset) ?? []) as P;
+        return (reader.readStringList(offset)) as P;
       case 2:
-        return (reader.readString(offset)) as P;
+        return (reader.readStringOrNull(offset)) as P;
       case 3:
         return (reader.readString(offset)) as P;
       case 4:
-        return (reader.readString(offset)) as P;
+        return (reader.readStringOrNull(offset)) as P;
       case 5:
-        return (reader.readLong(offset)) as P;
+        return (reader.readLongOrNull(offset)) as P;
       case 6:
-        return (reader.readDateTime(offset)) as P;
+        return (reader.readDateTimeOrNull(offset)) as P;
       default:
         throw 'Illegal propertyIndex';
     }
@@ -300,8 +307,16 @@ extension MemoQueryWhere on QueryBuilder<Memo, Memo, QWhereClause> {
 }
 
 extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> bodyIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'body',
+      value: null,
+    ));
+  }
+
   QueryBuilder<Memo, Memo, QAfterFilterCondition> bodyEqualTo(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -313,7 +328,7 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> bodyGreaterThan(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
     bool include = false,
   }) {
@@ -327,7 +342,7 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> bodyLessThan(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
     bool include = false,
   }) {
@@ -341,8 +356,8 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> bodyBetween(
-    String lower,
-    String upper, {
+    String? lower,
+    String? upper, {
     bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
@@ -456,8 +471,24 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
     ));
   }
 
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'keywords',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsAnyIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'keywords',
+      value: null,
+    ));
+  }
+
   QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsAnyEqualTo(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -469,7 +500,7 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsAnyGreaterThan(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
     bool include = false,
   }) {
@@ -483,7 +514,7 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsAnyLessThan(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
     bool include = false,
   }) {
@@ -497,8 +528,8 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsAnyBetween(
-    String lower,
-    String upper, {
+    String? lower,
+    String? upper, {
     bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
@@ -559,8 +590,16 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
     ));
   }
 
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsStringIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'keywordsString',
+      value: null,
+    ));
+  }
+
   QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsStringEqualTo(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -572,7 +611,7 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsStringGreaterThan(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
     bool include = false,
   }) {
@@ -586,7 +625,7 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsStringLessThan(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
     bool include = false,
   }) {
@@ -600,8 +639,8 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsStringBetween(
-    String lower,
-    String upper, {
+    String? lower,
+    String? upper, {
     bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
@@ -763,8 +802,16 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
     ));
   }
 
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> purchaceStoreIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'purchaceStore',
+      value: null,
+    ));
+  }
+
   QueryBuilder<Memo, Memo, QAfterFilterCondition> purchaceStoreEqualTo(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -776,7 +823,7 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> purchaceStoreGreaterThan(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
     bool include = false,
   }) {
@@ -790,7 +837,7 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> purchaceStoreLessThan(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
     bool include = false,
   }) {
@@ -804,8 +851,8 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> purchaceStoreBetween(
-    String lower,
-    String upper, {
+    String? lower,
+    String? upper, {
     bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
@@ -866,7 +913,15 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
     ));
   }
 
-  QueryBuilder<Memo, Memo, QAfterFilterCondition> scoreEqualTo(int value) {
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> scoreIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'score',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> scoreEqualTo(int? value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'score',
@@ -875,7 +930,7 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> scoreGreaterThan(
-    int value, {
+    int? value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -887,7 +942,7 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> scoreLessThan(
-    int value, {
+    int? value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -899,8 +954,8 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> scoreBetween(
-    int lower,
-    int upper, {
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -913,8 +968,16 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
     ));
   }
 
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> tappedOnIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'tappedOn',
+      value: null,
+    ));
+  }
+
   QueryBuilder<Memo, Memo, QAfterFilterCondition> tappedOnEqualTo(
-      DateTime value) {
+      DateTime? value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'tappedOn',
@@ -923,7 +986,7 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> tappedOnGreaterThan(
-    DateTime value, {
+    DateTime? value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -935,7 +998,7 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> tappedOnLessThan(
-    DateTime value, {
+    DateTime? value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -947,8 +1010,8 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> tappedOnBetween(
-    DateTime lower,
-    DateTime upper, {
+    DateTime? lower,
+    DateTime? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -1116,7 +1179,7 @@ extension MemoQueryWhereDistinct on QueryBuilder<Memo, Memo, QDistinct> {
 }
 
 extension MemoQueryProperty on QueryBuilder<Memo, Memo, QQueryProperty> {
-  QueryBuilder<Memo, String, QQueryOperations> bodyProperty() {
+  QueryBuilder<Memo, String?, QQueryOperations> bodyProperty() {
     return addPropertyNameInternal('body');
   }
 
@@ -1124,11 +1187,11 @@ extension MemoQueryProperty on QueryBuilder<Memo, Memo, QQueryProperty> {
     return addPropertyNameInternal('id');
   }
 
-  QueryBuilder<Memo, List<String>, QQueryOperations> keywordsProperty() {
+  QueryBuilder<Memo, List<String>?, QQueryOperations> keywordsProperty() {
     return addPropertyNameInternal('keywords');
   }
 
-  QueryBuilder<Memo, String, QQueryOperations> keywordsStringProperty() {
+  QueryBuilder<Memo, String?, QQueryOperations> keywordsStringProperty() {
     return addPropertyNameInternal('keywordsString');
   }
 
@@ -1136,15 +1199,15 @@ extension MemoQueryProperty on QueryBuilder<Memo, Memo, QQueryProperty> {
     return addPropertyNameInternal('name');
   }
 
-  QueryBuilder<Memo, String, QQueryOperations> purchaceStoreProperty() {
+  QueryBuilder<Memo, String?, QQueryOperations> purchaceStoreProperty() {
     return addPropertyNameInternal('purchaceStore');
   }
 
-  QueryBuilder<Memo, int, QQueryOperations> scoreProperty() {
+  QueryBuilder<Memo, int?, QQueryOperations> scoreProperty() {
     return addPropertyNameInternal('score');
   }
 
-  QueryBuilder<Memo, DateTime, QQueryOperations> tappedOnProperty() {
+  QueryBuilder<Memo, DateTime?, QQueryOperations> tappedOnProperty() {
     return addPropertyNameInternal('tappedOn');
   }
 }
