@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:uchi_sake/common.dart';
+import 'package:uchi_sake/helpers.dart';
 import 'package:uchi_sake/models/memo.dart';
 import 'package:uchi_sake/widgets/memo_edit_page.dart';
 
@@ -65,7 +66,7 @@ class _MemoListPageState extends State<MemoListPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "${memo.tappedOn.year}/${memo.tappedOn.month}/${memo.tappedOn.day}",
+                            dateTime2yyyymmdd(memo.tappedOn),
                             style: const TextStyle(
                                 color: Colors.grey, fontSize: 15),
                           ),
