@@ -13,11 +13,6 @@ class MemoListPage extends StatefulWidget {
 }
 
 class _MemoListPageState extends State<MemoListPage> {
-  static const star = Icon(
-    Icons.star,
-    color: Color.fromRGBO(253, 216, 53, 1),
-    size: 15,
-  );
   List<Memo> memos = [];
 
   void _createMemo(BuildContext context) async {
@@ -76,11 +71,7 @@ class _MemoListPageState extends State<MemoListPage> {
                             overflow: TextOverflow.ellipsis,
                             softWrap: true,
                           ),
-                          Row(
-                            children: [
-                              for (var i = 1; i <= memo.score; i++) star
-                            ],
-                          )
+                          stars(memo.score),
                         ],
                       ),
                     ),
