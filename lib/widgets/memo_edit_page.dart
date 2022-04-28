@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uchi_sake/helpers.dart';
 import 'package:uchi_sake/models/memo.dart';
 
 class MemoEditPage extends StatefulWidget {
@@ -29,8 +30,7 @@ class _MemoEditPageState extends State<MemoEditPage> {
           child: ListView(
             children: [
               InkWell(
-                child: Text(
-                    "開栓日 ${memo.tappedOn.year}/${memo.tappedOn.month}/${memo.tappedOn.day}"),
+                child: Text("開栓日 ${dateTime2yyyymmdd(memo.tappedOn)}"),
                 onTap: () async {
                   DateTime? picked = await _selectDate(memo, context);
                   if (picked != null) {
@@ -89,7 +89,7 @@ class _MemoEditPageState extends State<MemoEditPage> {
   }
 
   Future<DateTime?> _selectDate(Memo memo, BuildContext context) async {
-    DateTime initialDate = memo.tappedOn;
+    DateTime initialDate = memo.tappedOn ?? DateTime.now();
     DateTime firstDate = DateTime.now().add(const Duration(days: -360));
     DateTime lastDate = DateTime.now().add(const Duration(days: 360));
     final DateTime? picked = await showDatePicker(
