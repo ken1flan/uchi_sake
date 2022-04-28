@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/material.dart';
 import 'test_helper.dart';
 import 'package:uchi_sake/helpers.dart';
 
@@ -7,7 +6,7 @@ void main() {
   wrapTest(() async {
     group('#dateTime2yyyymmdd', () {
       group('dateTime = nullのとき', () {
-        DateTime? dateTime = null;
+        DateTime? dateTime;
 
         test('空文字列を返すこと', () {
           expect(dateTime2yyyymmdd(dateTime), equals(''));
