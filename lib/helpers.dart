@@ -8,18 +8,16 @@ String dateTime2yyyymmdd(DateTime? dateTime) {
   }
 }
 
-Widget stars(int? score) {
+Row stars(int? score) {
   const star = Icon(
     Icons.star,
     color: Color.fromRGBO(253, 216, 53, 1),
     size: 15,
   );
 
-  if (score == null) {
-    return const Text('-');
-  } else {
-    return Row(
-      children: [for (var i = 1; i <= score; i++) star],
-    );
-  }
+  score ??= 0;
+
+  return Row(
+    children: [for (var i = 1; i <= score; i++) star],
+  );
 }

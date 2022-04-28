@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter/material.dart';
 import 'test_helper.dart';
 import 'package:uchi_sake/helpers.dart';
 
@@ -18,6 +19,40 @@ void main() {
 
         test('2022/4/5を返すこと', () {
           expect(dateTime2yyyymmdd(dateTime), equals('2022/4/5'));
+        });
+      });
+    });
+
+    group('#stars', () {
+      group('score = nullのとき', () {
+        int? score;
+
+        test('children.length = 0であること', () {
+          expect(stars(score).children.length, equals(0));
+        });
+      });
+
+      group('score = 0のとき', () {
+        int? score = 0;
+
+        test('children.length = 0であること', () {
+          expect(stars(score).children.length, equals(0));
+        });
+      });
+
+      group('score = 1のとき', () {
+        int? score = 1;
+
+        test('children.length = 1であること', () {
+          expect(stars(score).children.length, equals(1));
+        });
+      });
+
+      group('score = 2のとき', () {
+        int? score = 2;
+
+        test('children.length = 2であること', () {
+          expect(stars(score).children.length, equals(2));
         });
       });
     });
