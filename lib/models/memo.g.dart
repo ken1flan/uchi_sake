@@ -76,7 +76,7 @@ class _MemoWebAdapter extends IsarWebTypeAdapter<Memo> {
         .toList()
         .cast<String>();
     object.keywordsString = IsarNative.jsObjectGet(jsObj, 'keywordsString');
-    object.name = IsarNative.jsObjectGet(jsObj, 'name') ?? '';
+    object.name = IsarNative.jsObjectGet(jsObj, 'name');
     object.purchaceStore = IsarNative.jsObjectGet(jsObj, 'purchaceStore');
     object.score = IsarNative.jsObjectGet(jsObj, 'score');
     object.tappedOn = IsarNative.jsObjectGet(jsObj, 'tappedOn') != null
@@ -103,7 +103,7 @@ class _MemoWebAdapter extends IsarWebTypeAdapter<Memo> {
       case 'keywordsString':
         return (IsarNative.jsObjectGet(jsObj, 'keywordsString')) as P;
       case 'name':
-        return (IsarNative.jsObjectGet(jsObj, 'name') ?? '') as P;
+        return (IsarNative.jsObjectGet(jsObj, 'name')) as P;
       case 'purchaceStore':
         return (IsarNative.jsObjectGet(jsObj, 'purchaceStore')) as P;
       case 'score':
@@ -156,8 +156,11 @@ class _MemoNativeAdapter extends IsarNativeTypeAdapter<Memo> {
     }
     dynamicSize += (_keywordsString?.length ?? 0) as int;
     final value3 = object.name;
-    final _name = IsarBinaryWriter.utf8Encoder.convert(value3);
-    dynamicSize += (_name.length) as int;
+    IsarUint8List? _name;
+    if (value3 != null) {
+      _name = IsarBinaryWriter.utf8Encoder.convert(value3);
+    }
+    dynamicSize += (_name?.length ?? 0) as int;
     final value4 = object.purchaceStore;
     IsarUint8List? _purchaceStore;
     if (value4 != null) {
@@ -191,7 +194,7 @@ class _MemoNativeAdapter extends IsarNativeTypeAdapter<Memo> {
     object.id = id;
     object.keywords = reader.readStringList(offsets[1]);
     object.keywordsString = reader.readStringOrNull(offsets[2]);
-    object.name = reader.readString(offsets[3]);
+    object.name = reader.readStringOrNull(offsets[3]);
     object.purchaceStore = reader.readStringOrNull(offsets[4]);
     object.score = reader.readLongOrNull(offsets[5]);
     object.tappedOn = reader.readDateTimeOrNull(offsets[6]);
@@ -211,7 +214,7 @@ class _MemoNativeAdapter extends IsarNativeTypeAdapter<Memo> {
       case 2:
         return (reader.readStringOrNull(offset)) as P;
       case 3:
-        return (reader.readString(offset)) as P;
+        return (reader.readStringOrNull(offset)) as P;
       case 4:
         return (reader.readStringOrNull(offset)) as P;
       case 5:
@@ -701,8 +704,16 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
     ));
   }
 
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> nameIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'name',
+      value: null,
+    ));
+  }
+
   QueryBuilder<Memo, Memo, QAfterFilterCondition> nameEqualTo(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -714,7 +725,7 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> nameGreaterThan(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
     bool include = false,
   }) {
@@ -728,7 +739,7 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> nameLessThan(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
     bool include = false,
   }) {
@@ -742,8 +753,8 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
   }
 
   QueryBuilder<Memo, Memo, QAfterFilterCondition> nameBetween(
-    String lower,
-    String upper, {
+    String? lower,
+    String? upper, {
     bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
@@ -1195,7 +1206,7 @@ extension MemoQueryProperty on QueryBuilder<Memo, Memo, QQueryProperty> {
     return addPropertyNameInternal('keywordsString');
   }
 
-  QueryBuilder<Memo, String, QQueryOperations> nameProperty() {
+  QueryBuilder<Memo, String?, QQueryOperations> nameProperty() {
     return addPropertyNameInternal('name');
   }
 
