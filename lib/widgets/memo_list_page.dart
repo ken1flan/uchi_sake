@@ -19,7 +19,7 @@ class _MemoListPageState extends State<MemoListPage> {
     await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const MemoEditPage(),
+          builder: (context) => MemoEditPage(memo),
         ));
     setState(() {});
   }
@@ -68,7 +68,7 @@ class _MemoListPageState extends State<MemoListPage> {
                                   color: Colors.grey, fontSize: 15),
                             ),
                             Text(
-                              memo.name,
+                              memo.name ?? '',
                               style: const TextStyle(fontSize: 20),
                               overflow: TextOverflow.ellipsis,
                               softWrap: true,

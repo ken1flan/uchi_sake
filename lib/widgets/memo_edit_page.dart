@@ -3,23 +3,17 @@ import 'package:uchi_sake/helpers.dart';
 import 'package:uchi_sake/models/memo.dart';
 
 class MemoEditPage extends StatefulWidget {
-  const MemoEditPage({Key? key}) : super(key: key);
+  final Memo? memo;
+  const MemoEditPage(this.memo, {Key? key}) : super(key: key);
 
   @override
   State<MemoEditPage> createState() => _MemoEditPageState();
 }
 
 class _MemoEditPageState extends State<MemoEditPage> {
-  late Memo memo;
-
   @override
   Widget build(BuildContext context) {
-    memo = Memo();
-    memo.name = 'おさけのなまえ';
-    memo.purchaceStore = 'なんとか酒店';
-    memo.tappedOn = DateTime.now();
-    memo.keywordsString = '日本酒 純米 原酒 辛口';
-    memo.body = 'たいへん美味しかった！';
+    Memo memo = widget.memo ?? Memo();
 
     return Scaffold(
         appBar: AppBar(
@@ -30,7 +24,8 @@ class _MemoEditPageState extends State<MemoEditPage> {
           child: ListView(
             children: [
               InkWell(
-                child: Text("開栓日 ${dateTime2yyyymmdd(memo.tappedOn)}"),
+                child: Text(
+                    "開栓日 ${dateTime2yyyymmdd(memo.tappedOn ?? DateTime.now())}"),
                 onTap: () async {
                   DateTime? picked = await _selectDate(memo, context);
                   if (picked != null) {
