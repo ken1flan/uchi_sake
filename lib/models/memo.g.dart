@@ -17,18 +17,20 @@ extension GetMemoCollection on Isar {
 final MemoSchema = CollectionSchema(
   name: 'Memo',
   schema:
-      '{"name":"Memo","idName":"id","properties":[{"name":"body","type":"String"},{"name":"keywords","type":"StringList"},{"name":"keywordsString","type":"String"},{"name":"name","type":"String"},{"name":"purchaceStore","type":"String"},{"name":"score","type":"Long"},{"name":"tappedOn","type":"Long"}],"indexes":[],"links":[]}',
+      '{"name":"Memo","idName":"id","properties":[{"name":"body","type":"String"},{"name":"createdAt","type":"Long"},{"name":"keywords","type":"StringList"},{"name":"keywordsString","type":"String"},{"name":"name","type":"String"},{"name":"purchaceStore","type":"String"},{"name":"score","type":"Long"},{"name":"tappedOn","type":"Long"},{"name":"updatedAt","type":"Long"}],"indexes":[],"links":[]}',
   nativeAdapter: const _MemoNativeAdapter(),
   webAdapter: const _MemoWebAdapter(),
   idName: 'id',
   propertyIds: {
     'body': 0,
-    'keywords': 1,
-    'keywordsString': 2,
-    'name': 3,
-    'purchaceStore': 4,
-    'score': 5,
-    'tappedOn': 6
+    'createdAt': 1,
+    'keywords': 2,
+    'keywordsString': 3,
+    'name': 4,
+    'purchaceStore': 5,
+    'score': 6,
+    'tappedOn': 7,
+    'updatedAt': 8
   },
   listProperties: {'keywords'},
   indexIds: {},
@@ -55,6 +57,8 @@ class _MemoWebAdapter extends IsarWebTypeAdapter<Memo> {
   Object serialize(IsarCollection<Memo> collection, Memo object) {
     final jsObj = IsarNative.newJsObject();
     IsarNative.jsObjectSet(jsObj, 'body', object.body);
+    IsarNative.jsObjectSet(
+        jsObj, 'createdAt', object.createdAt.toUtc().millisecondsSinceEpoch);
     IsarNative.jsObjectSet(jsObj, 'id', object.id);
     IsarNative.jsObjectSet(jsObj, 'keywords', object.keywords);
     IsarNative.jsObjectSet(jsObj, 'keywordsString', object.keywordsString);
@@ -63,6 +67,8 @@ class _MemoWebAdapter extends IsarWebTypeAdapter<Memo> {
     IsarNative.jsObjectSet(jsObj, 'score', object.score);
     IsarNative.jsObjectSet(
         jsObj, 'tappedOn', object.tappedOn?.toUtc().millisecondsSinceEpoch);
+    IsarNative.jsObjectSet(
+        jsObj, 'updatedAt', object.updatedAt.toUtc().millisecondsSinceEpoch);
     return jsObj;
   }
 
@@ -70,6 +76,12 @@ class _MemoWebAdapter extends IsarWebTypeAdapter<Memo> {
   Memo deserialize(IsarCollection<Memo> collection, dynamic jsObj) {
     final object = Memo();
     object.body = IsarNative.jsObjectGet(jsObj, 'body');
+    object.createdAt = IsarNative.jsObjectGet(jsObj, 'createdAt') != null
+        ? DateTime.fromMillisecondsSinceEpoch(
+                IsarNative.jsObjectGet(jsObj, 'createdAt'),
+                isUtc: true)
+            .toLocal()
+        : DateTime.fromMillisecondsSinceEpoch(0);
     object.id = IsarNative.jsObjectGet(jsObj, 'id');
     object.keywords = (IsarNative.jsObjectGet(jsObj, 'keywords') as List?)
         ?.map((e) => e ?? '')
@@ -85,6 +97,12 @@ class _MemoWebAdapter extends IsarWebTypeAdapter<Memo> {
                 isUtc: true)
             .toLocal()
         : null;
+    object.updatedAt = IsarNative.jsObjectGet(jsObj, 'updatedAt') != null
+        ? DateTime.fromMillisecondsSinceEpoch(
+                IsarNative.jsObjectGet(jsObj, 'updatedAt'),
+                isUtc: true)
+            .toLocal()
+        : DateTime.fromMillisecondsSinceEpoch(0);
     return object;
   }
 
@@ -93,6 +111,13 @@ class _MemoWebAdapter extends IsarWebTypeAdapter<Memo> {
     switch (propertyName) {
       case 'body':
         return (IsarNative.jsObjectGet(jsObj, 'body')) as P;
+      case 'createdAt':
+        return (IsarNative.jsObjectGet(jsObj, 'createdAt') != null
+            ? DateTime.fromMillisecondsSinceEpoch(
+                    IsarNative.jsObjectGet(jsObj, 'createdAt'),
+                    isUtc: true)
+                .toLocal()
+            : DateTime.fromMillisecondsSinceEpoch(0)) as P;
       case 'id':
         return (IsarNative.jsObjectGet(jsObj, 'id')) as P;
       case 'keywords':
@@ -115,6 +140,13 @@ class _MemoWebAdapter extends IsarWebTypeAdapter<Memo> {
                     isUtc: true)
                 .toLocal()
             : null) as P;
+      case 'updatedAt':
+        return (IsarNative.jsObjectGet(jsObj, 'updatedAt') != null
+            ? DateTime.fromMillisecondsSinceEpoch(
+                    IsarNative.jsObjectGet(jsObj, 'updatedAt'),
+                    isUtc: true)
+                .toLocal()
+            : DateTime.fromMillisecondsSinceEpoch(0)) as P;
       default:
         throw 'Illegal propertyName';
     }
@@ -137,40 +169,44 @@ class _MemoNativeAdapter extends IsarNativeTypeAdapter<Memo> {
       _body = IsarBinaryWriter.utf8Encoder.convert(value0);
     }
     dynamicSize += (_body?.length ?? 0) as int;
-    final value1 = object.keywords;
-    dynamicSize += (value1?.length ?? 0) * 8;
-    List<IsarUint8List?>? bytesList1;
-    if (value1 != null) {
-      bytesList1 = [];
-      for (var str in value1) {
+    final value1 = object.createdAt;
+    final _createdAt = value1;
+    final value2 = object.keywords;
+    dynamicSize += (value2?.length ?? 0) * 8;
+    List<IsarUint8List?>? bytesList2;
+    if (value2 != null) {
+      bytesList2 = [];
+      for (var str in value2) {
         final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-        bytesList1.add(bytes);
+        bytesList2.add(bytes);
         dynamicSize += bytes.length as int;
       }
     }
-    final _keywords = bytesList1;
-    final value2 = object.keywordsString;
+    final _keywords = bytesList2;
+    final value3 = object.keywordsString;
     IsarUint8List? _keywordsString;
-    if (value2 != null) {
-      _keywordsString = IsarBinaryWriter.utf8Encoder.convert(value2);
+    if (value3 != null) {
+      _keywordsString = IsarBinaryWriter.utf8Encoder.convert(value3);
     }
     dynamicSize += (_keywordsString?.length ?? 0) as int;
-    final value3 = object.name;
+    final value4 = object.name;
     IsarUint8List? _name;
-    if (value3 != null) {
-      _name = IsarBinaryWriter.utf8Encoder.convert(value3);
+    if (value4 != null) {
+      _name = IsarBinaryWriter.utf8Encoder.convert(value4);
     }
     dynamicSize += (_name?.length ?? 0) as int;
-    final value4 = object.purchaceStore;
+    final value5 = object.purchaceStore;
     IsarUint8List? _purchaceStore;
-    if (value4 != null) {
-      _purchaceStore = IsarBinaryWriter.utf8Encoder.convert(value4);
+    if (value5 != null) {
+      _purchaceStore = IsarBinaryWriter.utf8Encoder.convert(value5);
     }
     dynamicSize += (_purchaceStore?.length ?? 0) as int;
-    final value5 = object.score;
-    final _score = value5;
-    final value6 = object.tappedOn;
-    final _tappedOn = value6;
+    final value6 = object.score;
+    final _score = value6;
+    final value7 = object.tappedOn;
+    final _tappedOn = value7;
+    final value8 = object.updatedAt;
+    final _updatedAt = value8;
     final size = staticSize + dynamicSize;
 
     rawObj.buffer = alloc(size);
@@ -178,12 +214,14 @@ class _MemoNativeAdapter extends IsarNativeTypeAdapter<Memo> {
     final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
     final writer = IsarBinaryWriter(buffer, staticSize);
     writer.writeBytes(offsets[0], _body);
-    writer.writeStringList(offsets[1], _keywords);
-    writer.writeBytes(offsets[2], _keywordsString);
-    writer.writeBytes(offsets[3], _name);
-    writer.writeBytes(offsets[4], _purchaceStore);
-    writer.writeLong(offsets[5], _score);
-    writer.writeDateTime(offsets[6], _tappedOn);
+    writer.writeDateTime(offsets[1], _createdAt);
+    writer.writeStringList(offsets[2], _keywords);
+    writer.writeBytes(offsets[3], _keywordsString);
+    writer.writeBytes(offsets[4], _name);
+    writer.writeBytes(offsets[5], _purchaceStore);
+    writer.writeLong(offsets[6], _score);
+    writer.writeDateTime(offsets[7], _tappedOn);
+    writer.writeDateTime(offsets[8], _updatedAt);
   }
 
   @override
@@ -191,13 +229,15 @@ class _MemoNativeAdapter extends IsarNativeTypeAdapter<Memo> {
       IsarBinaryReader reader, List<int> offsets) {
     final object = Memo();
     object.body = reader.readStringOrNull(offsets[0]);
+    object.createdAt = reader.readDateTime(offsets[1]);
     object.id = id;
-    object.keywords = reader.readStringList(offsets[1]);
-    object.keywordsString = reader.readStringOrNull(offsets[2]);
-    object.name = reader.readStringOrNull(offsets[3]);
-    object.purchaceStore = reader.readStringOrNull(offsets[4]);
-    object.score = reader.readLongOrNull(offsets[5]);
-    object.tappedOn = reader.readDateTimeOrNull(offsets[6]);
+    object.keywords = reader.readStringList(offsets[2]);
+    object.keywordsString = reader.readStringOrNull(offsets[3]);
+    object.name = reader.readStringOrNull(offsets[4]);
+    object.purchaceStore = reader.readStringOrNull(offsets[5]);
+    object.score = reader.readLongOrNull(offsets[6]);
+    object.tappedOn = reader.readDateTimeOrNull(offsets[7]);
+    object.updatedAt = reader.readDateTime(offsets[8]);
     return object;
   }
 
@@ -210,17 +250,21 @@ class _MemoNativeAdapter extends IsarNativeTypeAdapter<Memo> {
       case 0:
         return (reader.readStringOrNull(offset)) as P;
       case 1:
-        return (reader.readStringList(offset)) as P;
+        return (reader.readDateTime(offset)) as P;
       case 2:
-        return (reader.readStringOrNull(offset)) as P;
+        return (reader.readStringList(offset)) as P;
       case 3:
         return (reader.readStringOrNull(offset)) as P;
       case 4:
         return (reader.readStringOrNull(offset)) as P;
       case 5:
-        return (reader.readLongOrNull(offset)) as P;
+        return (reader.readStringOrNull(offset)) as P;
       case 6:
+        return (reader.readLongOrNull(offset)) as P;
+      case 7:
         return (reader.readDateTimeOrNull(offset)) as P;
+      case 8:
+        return (reader.readDateTime(offset)) as P;
       default:
         throw 'Illegal propertyIndex';
     }
@@ -416,6 +460,54 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
       property: 'body',
       value: pattern,
       caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> createdAtEqualTo(
+      DateTime value) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'createdAt',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> createdAtGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'createdAt',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> createdAtLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'createdAt',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> createdAtBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'createdAt',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
     ));
   }
 
@@ -1034,6 +1126,54 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
       includeUpper: includeUpper,
     ));
   }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> updatedAtEqualTo(
+      DateTime value) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'updatedAt',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> updatedAtGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'updatedAt',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> updatedAtLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'updatedAt',
+      value: value,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> updatedAtBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'updatedAt',
+      lower: lower,
+      includeLower: includeLower,
+      upper: upper,
+      includeUpper: includeUpper,
+    ));
+  }
 }
 
 extension MemoQueryLinks on QueryBuilder<Memo, Memo, QFilterCondition> {}
@@ -1045,6 +1185,14 @@ extension MemoQueryWhereSortBy on QueryBuilder<Memo, Memo, QSortBy> {
 
   QueryBuilder<Memo, Memo, QAfterSortBy> sortByBodyDesc() {
     return addSortByInternal('body', Sort.desc);
+  }
+
+  QueryBuilder<Memo, Memo, QAfterSortBy> sortByCreatedAt() {
+    return addSortByInternal('createdAt', Sort.asc);
+  }
+
+  QueryBuilder<Memo, Memo, QAfterSortBy> sortByCreatedAtDesc() {
+    return addSortByInternal('createdAt', Sort.desc);
   }
 
   QueryBuilder<Memo, Memo, QAfterSortBy> sortById() {
@@ -1094,6 +1242,14 @@ extension MemoQueryWhereSortBy on QueryBuilder<Memo, Memo, QSortBy> {
   QueryBuilder<Memo, Memo, QAfterSortBy> sortByTappedOnDesc() {
     return addSortByInternal('tappedOn', Sort.desc);
   }
+
+  QueryBuilder<Memo, Memo, QAfterSortBy> sortByUpdatedAt() {
+    return addSortByInternal('updatedAt', Sort.asc);
+  }
+
+  QueryBuilder<Memo, Memo, QAfterSortBy> sortByUpdatedAtDesc() {
+    return addSortByInternal('updatedAt', Sort.desc);
+  }
 }
 
 extension MemoQueryWhereSortThenBy on QueryBuilder<Memo, Memo, QSortThenBy> {
@@ -1103,6 +1259,14 @@ extension MemoQueryWhereSortThenBy on QueryBuilder<Memo, Memo, QSortThenBy> {
 
   QueryBuilder<Memo, Memo, QAfterSortBy> thenByBodyDesc() {
     return addSortByInternal('body', Sort.desc);
+  }
+
+  QueryBuilder<Memo, Memo, QAfterSortBy> thenByCreatedAt() {
+    return addSortByInternal('createdAt', Sort.asc);
+  }
+
+  QueryBuilder<Memo, Memo, QAfterSortBy> thenByCreatedAtDesc() {
+    return addSortByInternal('createdAt', Sort.desc);
   }
 
   QueryBuilder<Memo, Memo, QAfterSortBy> thenById() {
@@ -1152,12 +1316,24 @@ extension MemoQueryWhereSortThenBy on QueryBuilder<Memo, Memo, QSortThenBy> {
   QueryBuilder<Memo, Memo, QAfterSortBy> thenByTappedOnDesc() {
     return addSortByInternal('tappedOn', Sort.desc);
   }
+
+  QueryBuilder<Memo, Memo, QAfterSortBy> thenByUpdatedAt() {
+    return addSortByInternal('updatedAt', Sort.asc);
+  }
+
+  QueryBuilder<Memo, Memo, QAfterSortBy> thenByUpdatedAtDesc() {
+    return addSortByInternal('updatedAt', Sort.desc);
+  }
 }
 
 extension MemoQueryWhereDistinct on QueryBuilder<Memo, Memo, QDistinct> {
   QueryBuilder<Memo, Memo, QDistinct> distinctByBody(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('body', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<Memo, Memo, QDistinct> distinctByCreatedAt() {
+    return addDistinctByInternal('createdAt');
   }
 
   QueryBuilder<Memo, Memo, QDistinct> distinctById() {
@@ -1187,11 +1363,19 @@ extension MemoQueryWhereDistinct on QueryBuilder<Memo, Memo, QDistinct> {
   QueryBuilder<Memo, Memo, QDistinct> distinctByTappedOn() {
     return addDistinctByInternal('tappedOn');
   }
+
+  QueryBuilder<Memo, Memo, QDistinct> distinctByUpdatedAt() {
+    return addDistinctByInternal('updatedAt');
+  }
 }
 
 extension MemoQueryProperty on QueryBuilder<Memo, Memo, QQueryProperty> {
   QueryBuilder<Memo, String?, QQueryOperations> bodyProperty() {
     return addPropertyNameInternal('body');
+  }
+
+  QueryBuilder<Memo, DateTime, QQueryOperations> createdAtProperty() {
+    return addPropertyNameInternal('createdAt');
   }
 
   QueryBuilder<Memo, int?, QQueryOperations> idProperty() {
@@ -1220,5 +1404,9 @@ extension MemoQueryProperty on QueryBuilder<Memo, Memo, QQueryProperty> {
 
   QueryBuilder<Memo, DateTime?, QQueryOperations> tappedOnProperty() {
     return addPropertyNameInternal('tappedOn');
+  }
+
+  QueryBuilder<Memo, DateTime, QQueryOperations> updatedAtProperty() {
+    return addPropertyNameInternal('updatedAt');
   }
 }

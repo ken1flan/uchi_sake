@@ -18,4 +18,6 @@ class Memo {
   int? score;
   String? purchaceStore;
   String? body;
+  late DateTime createdAt;
+  late DateTime updatedAt;
 }
