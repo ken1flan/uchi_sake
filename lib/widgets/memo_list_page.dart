@@ -15,11 +15,11 @@ class MemoListPage extends StatefulWidget {
 class _MemoListPageState extends State<MemoListPage> {
   List<Memo> memos = [];
 
-  void _createMemo(BuildContext context) async {
+  void _openMemo(Memo? memo, BuildContext context) async {
     await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const MemoEditPage(),
+          builder: (context) => MemoEditPage(memo),
         ));
     setState(() {});
   }
@@ -45,42 +45,45 @@ class _MemoListPageState extends State<MemoListPage> {
               children: memos.map((Memo memo) {
               // return Card(child: Text(memo.name));
               return Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(children: [
-                    const Padding(
-                        padding: EdgeInsets.only(right: 8),
-                        child: Image(
-                          image: AssetImage('assets/images/1px.png'),
-                          width: 64,
-                          height: 64,
-                          fit: BoxFit.cover,
-                        )),
-                    Flexible(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            dateTime2yyyymmdd(memo.tappedOn),
-                            style: const TextStyle(
-                                color: Colors.grey, fontSize: 15),
-                          ),
-                          Text(
-                            memo.name,
-                            style: const TextStyle(fontSize: 20),
-                            overflow: TextOverflow.ellipsis,
-                            softWrap: true,
-                          ),
-                          stars(memo.score),
-                        ],
+                child: InkWell(
+                  onTap: () => _openMemo(memo, context),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(children: [
+                      const Padding(
+                          padding: EdgeInsets.only(right: 8),
+                          child: Image(
+                            image: AssetImage('assets/images/1px.png'),
+                            width: 64,
+                            height: 64,
+                            fit: BoxFit.cover,
+                          )),
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              dateTime2yyyymmdd(memo.tappedOn),
+                              style: const TextStyle(
+                                  color: Colors.grey, fontSize: 15),
+                            ),
+                            Text(
+                              memo.name ?? '',
+                              style: const TextStyle(fontSize: 20),
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: true,
+                            ),
+                            stars(memo.score),
+                          ],
+                        ),
                       ),
-                    ),
-                  ]),
+                    ]),
+                  ),
                 ),
               );
             }).toList()),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _createMemo(context),
+        onPressed: () => _openMemo(null, context),
         tooltip: 'メモを追加します。',
         child: const Icon(Icons.add),
       ),

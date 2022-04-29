@@ -38,7 +38,7 @@ void main() {
         const memoListPage = MemoListPage();
         await tester.pumpWidget(const MaterialApp(home: memoListPage));
 
-        expect(find.text(memo.name), findsOneWidget);
+        expect(find.text(memo.name!), findsOneWidget);
       });
     });
 
@@ -66,7 +66,7 @@ void main() {
         await tester.pumpWidget(const MaterialApp(home: memoListPage));
 
         for (var memo in memos) {
-          expect(find.text(memo.name), findsOneWidget);
+          expect(find.text(memo.name!), findsOneWidget);
         }
       });
     });
