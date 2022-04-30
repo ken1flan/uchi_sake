@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:isar/isar.dart';
+import 'package:uchi_sake/common.dart';
 
 part 'memo.g.dart';
 
@@ -20,4 +21,14 @@ class Memo {
   String? body;
   late DateTime createdAt;
   late DateTime updatedAt;
+
+  void save() {
+    updatedAt = DateTime.now();
+    if (id == null) {
+      createdAt = updatedAt;
+    }
+    isar.writeTxnSync((isar) {
+      id = isar.memos.putSync(this);
+    });
+  }
 }
