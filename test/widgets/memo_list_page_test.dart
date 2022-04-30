@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import '../test_helper.dart';
-import 'package:uchi_sake/common.dart';
 import 'package:uchi_sake/models/memo.dart';
 import 'package:uchi_sake/widgets/memo_list_page.dart';
 
@@ -31,7 +30,7 @@ void main() {
         ..body = "${i.toString()}回目！今回もたいへん美味しかった！";
 
       setUp(() {
-        isar.writeTxnSync((isar) => {memo.id = isar.memos.putSync(memo)});
+        memo.save();
       });
 
       testWidgets('メモが表示されていること', (WidgetTester tester) async {
@@ -57,7 +56,7 @@ void main() {
             ..keywordsString = "日本酒 純米 原酒 辛口 ${i.toString()}回目"
             ..body = "${i.toString()}回目！今回もたいへん美味しかった！";
           memos.add(memo);
-          isar.writeTxnSync((isar) => {memo.id = isar.memos.putSync(memo)});
+          memo.save();
         }
       });
 
