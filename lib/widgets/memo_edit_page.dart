@@ -31,7 +31,7 @@ class _MemoEditPageState extends State<MemoEditPage> {
                   if (picked != null) {
                     setState(() {
                       memo.tappedOn = picked;
-                      // TODO: 保存
+                      memo.save();
                     });
                   }
                 },
@@ -44,7 +44,8 @@ class _MemoEditPageState extends State<MemoEditPage> {
                   labelText: '名前',
                 ),
                 onChanged: (value) {
-                  // TODO: 保存
+                  memo.name = value;
+                  memo.save();
                 },
               ),
               TextFormField(
@@ -54,7 +55,8 @@ class _MemoEditPageState extends State<MemoEditPage> {
                   labelText: '買ったお店',
                 ),
                 onChanged: (value) {
-                  // TODO: 保存
+                  memo.purchaceStore = value;
+                  memo.save();
                 },
               ),
               TextFormField(
@@ -64,7 +66,8 @@ class _MemoEditPageState extends State<MemoEditPage> {
                   labelText: 'キーワード',
                 ),
                 onChanged: (value) {
-                  // TODO: 保存
+                  memo.keywordsString = value;
+                  memo.save();
                 },
               ),
               TextFormField(
@@ -75,7 +78,8 @@ class _MemoEditPageState extends State<MemoEditPage> {
                 ),
                 maxLines: 15,
                 onChanged: (value) {
-                  // TODO: 保存
+                  memo.body = value;
+                  memo.save();
                 },
               ),
             ],
