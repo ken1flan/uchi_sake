@@ -24,6 +24,32 @@ class _MemoListPageState extends State<MemoListPage> {
     setState(() {});
   }
 
+  void _deleteMemo(Memo memo, BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            content: Text('「${memo.name}」を削除しますか？'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('いいえ'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  setState(() {
+                    memo.destroy();
+                  });
+                  Navigator.of(context).pop();
+                },
+                child: const Text('はい'),
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     memos = isar.memos.where().findAllSync();
@@ -47,6 +73,7 @@ class _MemoListPageState extends State<MemoListPage> {
               return Card(
                 child: InkWell(
                   onTap: () => _openMemo(memo, context),
+                  onLongPress: () => _deleteMemo(memo, context),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(children: [
