@@ -31,4 +31,14 @@ class Memo {
       id = isar.memos.putSync(this);
     });
   }
+
+  void destroy() {
+    if (id == null) {
+      return;
+    } else {
+      isar.writeTxnSync((isar) {
+        isar.memos.deleteSync(id!);
+      });
+    }
+  }
 }

@@ -94,5 +94,36 @@ void main() {
         });
       });
     });
+
+    group('#destroy', () {
+      late Memo memo;
+
+      group('Memoが保存されていないとき', () {
+        setUp(() {
+          memo = Memo()
+            ..name = '名前のテスト'
+            ..body = '本文のテスト';
+        });
+        test('正常終了すること', () {
+          expect(() => memo.destroy(), returnsNormally);
+        });
+      });
+
+      group('Memoが保存されているとき', () {
+        setUp(() {
+          memo = Memo()
+            ..name = '名前のテスト'
+            ..body = '本文のテスト';
+          memo.save();
+        });
+        test('レコードが消えていること', () {
+          var id = memo.id;
+          memo.destroy();
+
+          var savedMemo = isar.memos.getSync(id!);
+          expect(savedMemo, isNull);
+        });
+      });
+    });
   });
 }
