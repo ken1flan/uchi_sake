@@ -39,6 +39,28 @@ void main() {
 
         expect(find.text(memo.name!), findsOneWidget);
       });
+
+      testWidgets('メモをタップしたときにメモ編集ページが表示されること', (WidgetTester tester) async {
+        const memoListPage = MemoListPage();
+        await tester.pumpWidget(const MaterialApp(home: memoListPage));
+
+        await tester.tap(find.text(memo.name!));
+        await tester.pumpAndSettle();
+
+        expect(find.text(memo.name!), findsOneWidget);
+      });
+
+      testWidgets('タイトルを長押したときに記事を削除できること', (WidgetTester tester) async {
+        const memoListPage = MemoListPage();
+        await tester.pumpWidget(const MaterialApp(home: memoListPage));
+        await tester.longPress(find.text(memo.name!));
+        await tester.pump();
+
+        await tester.tap(find.text('はい'));
+        await tester.pump();
+
+        expect(find.text('まだありません。'), findsOneWidget);
+      });
     });
 
     group('メモが2件のとき', () {
@@ -68,6 +90,16 @@ void main() {
           expect(find.text(memo.name!), findsOneWidget);
         }
       });
+    });
+
+    testWidgets('エディットボタンを押したときに記事ページが表示されること', (WidgetTester tester) async {
+      const memoListPage = MemoListPage();
+      await tester.pumpWidget(const MaterialApp(home: memoListPage));
+
+      await tester.tap(find.byIcon(Icons.add));
+      await tester.pump();
+
+      expect(find.text('飲んだお酒のメモ'), findsOneWidget);
     });
   });
 }
