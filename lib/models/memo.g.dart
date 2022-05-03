@@ -17,7 +17,7 @@ extension GetMemoCollection on Isar {
 final MemoSchema = CollectionSchema(
   name: 'Memo',
   schema:
-      '{"name":"Memo","idName":"id","properties":[{"name":"body","type":"String"},{"name":"createdAt","type":"Long"},{"name":"keywords","type":"StringList"},{"name":"keywordsString","type":"String"},{"name":"name","type":"String"},{"name":"purchaceStore","type":"String"},{"name":"score","type":"Long"},{"name":"tappedOn","type":"Long"},{"name":"updatedAt","type":"Long"}],"indexes":[],"links":[]}',
+      '{"name":"Memo","idName":"id","properties":[{"name":"body","type":"String"},{"name":"createdAt","type":"Long"},{"name":"keywords","type":"StringList"},{"name":"keywordsString","type":"String"},{"name":"labelImage","type":"String"},{"name":"name","type":"String"},{"name":"otherImage","type":"String"},{"name":"purchaceStore","type":"String"},{"name":"score","type":"Long"},{"name":"specImage","type":"String"},{"name":"tappedOn","type":"Long"},{"name":"updatedAt","type":"Long"}],"indexes":[],"links":[]}',
   nativeAdapter: const _MemoNativeAdapter(),
   webAdapter: const _MemoWebAdapter(),
   idName: 'id',
@@ -26,11 +26,14 @@ final MemoSchema = CollectionSchema(
     'createdAt': 1,
     'keywords': 2,
     'keywordsString': 3,
-    'name': 4,
-    'purchaceStore': 5,
-    'score': 6,
-    'tappedOn': 7,
-    'updatedAt': 8
+    'labelImage': 4,
+    'name': 5,
+    'otherImage': 6,
+    'purchaceStore': 7,
+    'score': 8,
+    'specImage': 9,
+    'tappedOn': 10,
+    'updatedAt': 11
   },
   listProperties: {'keywords'},
   indexIds: {},
@@ -50,6 +53,8 @@ final MemoSchema = CollectionSchema(
   version: 2,
 );
 
+const _memoFileConverter = FileConverter();
+
 class _MemoWebAdapter extends IsarWebTypeAdapter<Memo> {
   const _MemoWebAdapter();
 
@@ -62,9 +67,15 @@ class _MemoWebAdapter extends IsarWebTypeAdapter<Memo> {
     IsarNative.jsObjectSet(jsObj, 'id', object.id);
     IsarNative.jsObjectSet(jsObj, 'keywords', object.keywords);
     IsarNative.jsObjectSet(jsObj, 'keywordsString', object.keywordsString);
+    IsarNative.jsObjectSet(
+        jsObj, 'labelImage', _memoFileConverter.toIsar(object.labelImage));
     IsarNative.jsObjectSet(jsObj, 'name', object.name);
+    IsarNative.jsObjectSet(
+        jsObj, 'otherImage', _memoFileConverter.toIsar(object.otherImage));
     IsarNative.jsObjectSet(jsObj, 'purchaceStore', object.purchaceStore);
     IsarNative.jsObjectSet(jsObj, 'score', object.score);
+    IsarNative.jsObjectSet(
+        jsObj, 'specImage', _memoFileConverter.toIsar(object.specImage));
     IsarNative.jsObjectSet(
         jsObj, 'tappedOn', object.tappedOn?.toUtc().millisecondsSinceEpoch);
     IsarNative.jsObjectSet(
@@ -88,9 +99,15 @@ class _MemoWebAdapter extends IsarWebTypeAdapter<Memo> {
         .toList()
         .cast<String>();
     object.keywordsString = IsarNative.jsObjectGet(jsObj, 'keywordsString');
+    object.labelImage = _memoFileConverter
+        .fromIsar(IsarNative.jsObjectGet(jsObj, 'labelImage'));
     object.name = IsarNative.jsObjectGet(jsObj, 'name');
+    object.otherImage = _memoFileConverter
+        .fromIsar(IsarNative.jsObjectGet(jsObj, 'otherImage'));
     object.purchaceStore = IsarNative.jsObjectGet(jsObj, 'purchaceStore');
     object.score = IsarNative.jsObjectGet(jsObj, 'score');
+    object.specImage =
+        _memoFileConverter.fromIsar(IsarNative.jsObjectGet(jsObj, 'specImage'));
     object.tappedOn = IsarNative.jsObjectGet(jsObj, 'tappedOn') != null
         ? DateTime.fromMillisecondsSinceEpoch(
                 IsarNative.jsObjectGet(jsObj, 'tappedOn'),
@@ -127,12 +144,21 @@ class _MemoWebAdapter extends IsarWebTypeAdapter<Memo> {
             .cast<String>()) as P;
       case 'keywordsString':
         return (IsarNative.jsObjectGet(jsObj, 'keywordsString')) as P;
+      case 'labelImage':
+        return (_memoFileConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'labelImage'))) as P;
       case 'name':
         return (IsarNative.jsObjectGet(jsObj, 'name')) as P;
+      case 'otherImage':
+        return (_memoFileConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'otherImage'))) as P;
       case 'purchaceStore':
         return (IsarNative.jsObjectGet(jsObj, 'purchaceStore')) as P;
       case 'score':
         return (IsarNative.jsObjectGet(jsObj, 'score')) as P;
+      case 'specImage':
+        return (_memoFileConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'specImage'))) as P;
       case 'tappedOn':
         return (IsarNative.jsObjectGet(jsObj, 'tappedOn') != null
             ? DateTime.fromMillisecondsSinceEpoch(
@@ -189,24 +215,42 @@ class _MemoNativeAdapter extends IsarNativeTypeAdapter<Memo> {
       _keywordsString = IsarBinaryWriter.utf8Encoder.convert(value3);
     }
     dynamicSize += (_keywordsString?.length ?? 0) as int;
-    final value4 = object.name;
-    IsarUint8List? _name;
+    final value4 = _memoFileConverter.toIsar(object.labelImage);
+    IsarUint8List? _labelImage;
     if (value4 != null) {
-      _name = IsarBinaryWriter.utf8Encoder.convert(value4);
+      _labelImage = IsarBinaryWriter.utf8Encoder.convert(value4);
+    }
+    dynamicSize += (_labelImage?.length ?? 0) as int;
+    final value5 = object.name;
+    IsarUint8List? _name;
+    if (value5 != null) {
+      _name = IsarBinaryWriter.utf8Encoder.convert(value5);
     }
     dynamicSize += (_name?.length ?? 0) as int;
-    final value5 = object.purchaceStore;
+    final value6 = _memoFileConverter.toIsar(object.otherImage);
+    IsarUint8List? _otherImage;
+    if (value6 != null) {
+      _otherImage = IsarBinaryWriter.utf8Encoder.convert(value6);
+    }
+    dynamicSize += (_otherImage?.length ?? 0) as int;
+    final value7 = object.purchaceStore;
     IsarUint8List? _purchaceStore;
-    if (value5 != null) {
-      _purchaceStore = IsarBinaryWriter.utf8Encoder.convert(value5);
+    if (value7 != null) {
+      _purchaceStore = IsarBinaryWriter.utf8Encoder.convert(value7);
     }
     dynamicSize += (_purchaceStore?.length ?? 0) as int;
-    final value6 = object.score;
-    final _score = value6;
-    final value7 = object.tappedOn;
-    final _tappedOn = value7;
-    final value8 = object.updatedAt;
-    final _updatedAt = value8;
+    final value8 = object.score;
+    final _score = value8;
+    final value9 = _memoFileConverter.toIsar(object.specImage);
+    IsarUint8List? _specImage;
+    if (value9 != null) {
+      _specImage = IsarBinaryWriter.utf8Encoder.convert(value9);
+    }
+    dynamicSize += (_specImage?.length ?? 0) as int;
+    final value10 = object.tappedOn;
+    final _tappedOn = value10;
+    final value11 = object.updatedAt;
+    final _updatedAt = value11;
     final size = staticSize + dynamicSize;
 
     rawObj.buffer = alloc(size);
@@ -217,11 +261,14 @@ class _MemoNativeAdapter extends IsarNativeTypeAdapter<Memo> {
     writer.writeDateTime(offsets[1], _createdAt);
     writer.writeStringList(offsets[2], _keywords);
     writer.writeBytes(offsets[3], _keywordsString);
-    writer.writeBytes(offsets[4], _name);
-    writer.writeBytes(offsets[5], _purchaceStore);
-    writer.writeLong(offsets[6], _score);
-    writer.writeDateTime(offsets[7], _tappedOn);
-    writer.writeDateTime(offsets[8], _updatedAt);
+    writer.writeBytes(offsets[4], _labelImage);
+    writer.writeBytes(offsets[5], _name);
+    writer.writeBytes(offsets[6], _otherImage);
+    writer.writeBytes(offsets[7], _purchaceStore);
+    writer.writeLong(offsets[8], _score);
+    writer.writeBytes(offsets[9], _specImage);
+    writer.writeDateTime(offsets[10], _tappedOn);
+    writer.writeDateTime(offsets[11], _updatedAt);
   }
 
   @override
@@ -233,11 +280,17 @@ class _MemoNativeAdapter extends IsarNativeTypeAdapter<Memo> {
     object.id = id;
     object.keywords = reader.readStringList(offsets[2]);
     object.keywordsString = reader.readStringOrNull(offsets[3]);
-    object.name = reader.readStringOrNull(offsets[4]);
-    object.purchaceStore = reader.readStringOrNull(offsets[5]);
-    object.score = reader.readLongOrNull(offsets[6]);
-    object.tappedOn = reader.readDateTimeOrNull(offsets[7]);
-    object.updatedAt = reader.readDateTime(offsets[8]);
+    object.labelImage =
+        _memoFileConverter.fromIsar(reader.readStringOrNull(offsets[4]));
+    object.name = reader.readStringOrNull(offsets[5]);
+    object.otherImage =
+        _memoFileConverter.fromIsar(reader.readStringOrNull(offsets[6]));
+    object.purchaceStore = reader.readStringOrNull(offsets[7]);
+    object.score = reader.readLongOrNull(offsets[8]);
+    object.specImage =
+        _memoFileConverter.fromIsar(reader.readStringOrNull(offsets[9]));
+    object.tappedOn = reader.readDateTimeOrNull(offsets[10]);
+    object.updatedAt = reader.readDateTime(offsets[11]);
     return object;
   }
 
@@ -256,14 +309,23 @@ class _MemoNativeAdapter extends IsarNativeTypeAdapter<Memo> {
       case 3:
         return (reader.readStringOrNull(offset)) as P;
       case 4:
-        return (reader.readStringOrNull(offset)) as P;
+        return (_memoFileConverter.fromIsar(reader.readStringOrNull(offset)))
+            as P;
       case 5:
         return (reader.readStringOrNull(offset)) as P;
       case 6:
-        return (reader.readLongOrNull(offset)) as P;
+        return (_memoFileConverter.fromIsar(reader.readStringOrNull(offset)))
+            as P;
       case 7:
-        return (reader.readDateTimeOrNull(offset)) as P;
+        return (reader.readStringOrNull(offset)) as P;
       case 8:
+        return (reader.readLongOrNull(offset)) as P;
+      case 9:
+        return (_memoFileConverter.fromIsar(reader.readStringOrNull(offset)))
+            as P;
+      case 10:
+        return (reader.readDateTimeOrNull(offset)) as P;
+      case 11:
         return (reader.readDateTime(offset)) as P;
       default:
         throw 'Illegal propertyIndex';
@@ -796,6 +858,116 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
     ));
   }
 
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> labelImageIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'labelImage',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> labelImageEqualTo(
+    File? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'labelImage',
+      value: _memoFileConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> labelImageGreaterThan(
+    File? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'labelImage',
+      value: _memoFileConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> labelImageLessThan(
+    File? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'labelImage',
+      value: _memoFileConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> labelImageBetween(
+    File? lower,
+    File? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'labelImage',
+      lower: _memoFileConverter.toIsar(lower),
+      includeLower: includeLower,
+      upper: _memoFileConverter.toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> labelImageStartsWith(
+    File value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'labelImage',
+      value: _memoFileConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> labelImageEndsWith(
+    File value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'labelImage',
+      value: _memoFileConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> labelImageContains(File value,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'labelImage',
+      value: _memoFileConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> labelImageMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'labelImage',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
   QueryBuilder<Memo, Memo, QAfterFilterCondition> nameIsNull() {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.isNull,
@@ -900,6 +1072,116 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
       property: 'name',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> otherImageIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'otherImage',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> otherImageEqualTo(
+    File? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'otherImage',
+      value: _memoFileConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> otherImageGreaterThan(
+    File? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'otherImage',
+      value: _memoFileConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> otherImageLessThan(
+    File? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'otherImage',
+      value: _memoFileConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> otherImageBetween(
+    File? lower,
+    File? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'otherImage',
+      lower: _memoFileConverter.toIsar(lower),
+      includeLower: includeLower,
+      upper: _memoFileConverter.toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> otherImageStartsWith(
+    File value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'otherImage',
+      value: _memoFileConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> otherImageEndsWith(
+    File value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'otherImage',
+      value: _memoFileConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> otherImageContains(File value,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'otherImage',
+      value: _memoFileConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> otherImageMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'otherImage',
       value: pattern,
       caseSensitive: caseSensitive,
     ));
@@ -1071,6 +1353,116 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
     ));
   }
 
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> specImageIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'specImage',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> specImageEqualTo(
+    File? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'specImage',
+      value: _memoFileConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> specImageGreaterThan(
+    File? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'specImage',
+      value: _memoFileConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> specImageLessThan(
+    File? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'specImage',
+      value: _memoFileConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> specImageBetween(
+    File? lower,
+    File? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'specImage',
+      lower: _memoFileConverter.toIsar(lower),
+      includeLower: includeLower,
+      upper: _memoFileConverter.toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> specImageStartsWith(
+    File value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'specImage',
+      value: _memoFileConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> specImageEndsWith(
+    File value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'specImage',
+      value: _memoFileConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> specImageContains(File value,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'specImage',
+      value: _memoFileConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterFilterCondition> specImageMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'specImage',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
   QueryBuilder<Memo, Memo, QAfterFilterCondition> tappedOnIsNull() {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.isNull,
@@ -1211,12 +1603,28 @@ extension MemoQueryWhereSortBy on QueryBuilder<Memo, Memo, QSortBy> {
     return addSortByInternal('keywordsString', Sort.desc);
   }
 
+  QueryBuilder<Memo, Memo, QAfterSortBy> sortByLabelImage() {
+    return addSortByInternal('labelImage', Sort.asc);
+  }
+
+  QueryBuilder<Memo, Memo, QAfterSortBy> sortByLabelImageDesc() {
+    return addSortByInternal('labelImage', Sort.desc);
+  }
+
   QueryBuilder<Memo, Memo, QAfterSortBy> sortByName() {
     return addSortByInternal('name', Sort.asc);
   }
 
   QueryBuilder<Memo, Memo, QAfterSortBy> sortByNameDesc() {
     return addSortByInternal('name', Sort.desc);
+  }
+
+  QueryBuilder<Memo, Memo, QAfterSortBy> sortByOtherImage() {
+    return addSortByInternal('otherImage', Sort.asc);
+  }
+
+  QueryBuilder<Memo, Memo, QAfterSortBy> sortByOtherImageDesc() {
+    return addSortByInternal('otherImage', Sort.desc);
   }
 
   QueryBuilder<Memo, Memo, QAfterSortBy> sortByPurchaceStore() {
@@ -1233,6 +1641,14 @@ extension MemoQueryWhereSortBy on QueryBuilder<Memo, Memo, QSortBy> {
 
   QueryBuilder<Memo, Memo, QAfterSortBy> sortByScoreDesc() {
     return addSortByInternal('score', Sort.desc);
+  }
+
+  QueryBuilder<Memo, Memo, QAfterSortBy> sortBySpecImage() {
+    return addSortByInternal('specImage', Sort.asc);
+  }
+
+  QueryBuilder<Memo, Memo, QAfterSortBy> sortBySpecImageDesc() {
+    return addSortByInternal('specImage', Sort.desc);
   }
 
   QueryBuilder<Memo, Memo, QAfterSortBy> sortByTappedOn() {
@@ -1285,12 +1701,28 @@ extension MemoQueryWhereSortThenBy on QueryBuilder<Memo, Memo, QSortThenBy> {
     return addSortByInternal('keywordsString', Sort.desc);
   }
 
+  QueryBuilder<Memo, Memo, QAfterSortBy> thenByLabelImage() {
+    return addSortByInternal('labelImage', Sort.asc);
+  }
+
+  QueryBuilder<Memo, Memo, QAfterSortBy> thenByLabelImageDesc() {
+    return addSortByInternal('labelImage', Sort.desc);
+  }
+
   QueryBuilder<Memo, Memo, QAfterSortBy> thenByName() {
     return addSortByInternal('name', Sort.asc);
   }
 
   QueryBuilder<Memo, Memo, QAfterSortBy> thenByNameDesc() {
     return addSortByInternal('name', Sort.desc);
+  }
+
+  QueryBuilder<Memo, Memo, QAfterSortBy> thenByOtherImage() {
+    return addSortByInternal('otherImage', Sort.asc);
+  }
+
+  QueryBuilder<Memo, Memo, QAfterSortBy> thenByOtherImageDesc() {
+    return addSortByInternal('otherImage', Sort.desc);
   }
 
   QueryBuilder<Memo, Memo, QAfterSortBy> thenByPurchaceStore() {
@@ -1307,6 +1739,14 @@ extension MemoQueryWhereSortThenBy on QueryBuilder<Memo, Memo, QSortThenBy> {
 
   QueryBuilder<Memo, Memo, QAfterSortBy> thenByScoreDesc() {
     return addSortByInternal('score', Sort.desc);
+  }
+
+  QueryBuilder<Memo, Memo, QAfterSortBy> thenBySpecImage() {
+    return addSortByInternal('specImage', Sort.asc);
+  }
+
+  QueryBuilder<Memo, Memo, QAfterSortBy> thenBySpecImageDesc() {
+    return addSortByInternal('specImage', Sort.desc);
   }
 
   QueryBuilder<Memo, Memo, QAfterSortBy> thenByTappedOn() {
@@ -1346,9 +1786,19 @@ extension MemoQueryWhereDistinct on QueryBuilder<Memo, Memo, QDistinct> {
         caseSensitive: caseSensitive);
   }
 
+  QueryBuilder<Memo, Memo, QDistinct> distinctByLabelImage(
+      {bool caseSensitive = true}) {
+    return addDistinctByInternal('labelImage', caseSensitive: caseSensitive);
+  }
+
   QueryBuilder<Memo, Memo, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('name', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<Memo, Memo, QDistinct> distinctByOtherImage(
+      {bool caseSensitive = true}) {
+    return addDistinctByInternal('otherImage', caseSensitive: caseSensitive);
   }
 
   QueryBuilder<Memo, Memo, QDistinct> distinctByPurchaceStore(
@@ -1358,6 +1808,11 @@ extension MemoQueryWhereDistinct on QueryBuilder<Memo, Memo, QDistinct> {
 
   QueryBuilder<Memo, Memo, QDistinct> distinctByScore() {
     return addDistinctByInternal('score');
+  }
+
+  QueryBuilder<Memo, Memo, QDistinct> distinctBySpecImage(
+      {bool caseSensitive = true}) {
+    return addDistinctByInternal('specImage', caseSensitive: caseSensitive);
   }
 
   QueryBuilder<Memo, Memo, QDistinct> distinctByTappedOn() {
@@ -1390,8 +1845,16 @@ extension MemoQueryProperty on QueryBuilder<Memo, Memo, QQueryProperty> {
     return addPropertyNameInternal('keywordsString');
   }
 
+  QueryBuilder<Memo, File?, QQueryOperations> labelImageProperty() {
+    return addPropertyNameInternal('labelImage');
+  }
+
   QueryBuilder<Memo, String?, QQueryOperations> nameProperty() {
     return addPropertyNameInternal('name');
+  }
+
+  QueryBuilder<Memo, File?, QQueryOperations> otherImageProperty() {
+    return addPropertyNameInternal('otherImage');
   }
 
   QueryBuilder<Memo, String?, QQueryOperations> purchaceStoreProperty() {
@@ -1400,6 +1863,10 @@ extension MemoQueryProperty on QueryBuilder<Memo, Memo, QQueryProperty> {
 
   QueryBuilder<Memo, int?, QQueryOperations> scoreProperty() {
     return addPropertyNameInternal('score');
+  }
+
+  QueryBuilder<Memo, File?, QQueryOperations> specImageProperty() {
+    return addPropertyNameInternal('specImage');
   }
 
   QueryBuilder<Memo, DateTime?, QQueryOperations> tappedOnProperty() {

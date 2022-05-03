@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:isar/isar.dart';
 import 'package:uchi_sake/common.dart';
+import 'package:uchi_sake/models/file_converter.dart';
 
 part 'memo.g.dart';
 
@@ -10,8 +11,11 @@ class Memo {
   int? id;
 
   String? name;
+  @FileConverter()
   File? labelImage;
+  @FileConverter()
   File? specImage;
+  @FileConverter()
   File? otherImage;
   DateTime? tappedOn;
   List<String>? keywords;
