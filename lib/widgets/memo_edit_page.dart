@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:uchi_sake/helpers.dart';
 import 'package:uchi_sake/models/memo.dart';
 
@@ -11,6 +13,8 @@ class MemoEditPage extends StatefulWidget {
 }
 
 class _MemoEditPageState extends State<MemoEditPage> {
+  final ImagePicker imagePicker = ImagePicker();
+
   @override
   Widget build(BuildContext context) {
     Memo memo = widget.memo ?? Memo();
@@ -47,6 +51,129 @@ class _MemoEditPageState extends State<MemoEditPage> {
                   memo.name = value;
                   memo.save();
                 },
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 32, bottom: 0),
+                child: Text(
+                  'ラベルの写真',
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                ),
+              ),
+              memo.labelImage == null
+                  ? const Text('画像が選択されていません。')
+                  : Image.file(memo.labelImage!),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  OutlinedButton(
+                      onPressed: () {
+                        final image = _getImageFromCamera();
+                        image.then((value) {
+                          setState(() {
+                            memo.labelImage = value;
+                            memo.save();
+                          });
+                        });
+                      },
+                      style: OutlinedButton.styleFrom(
+                          shape: const StadiumBorder()),
+                      child: const Icon(Icons.add_a_photo)),
+                  OutlinedButton(
+                      onPressed: () {
+                        final image = _getImageFromGallery();
+                        image.then((value) {
+                          setState(() {
+                            memo.labelImage = value;
+                            memo.save();
+                          });
+                        });
+                      },
+                      style: OutlinedButton.styleFrom(
+                          shape: const StadiumBorder()),
+                      child: const Icon(Icons.photo_library)),
+                ],
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 32, bottom: 0),
+                child: Text(
+                  '成分の写真',
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                ),
+              ),
+              memo.specImage == null
+                  ? const Text('画像が選択されていません。')
+                  : Image.file(memo.specImage!),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  OutlinedButton(
+                      onPressed: () {
+                        final image = _getImageFromCamera();
+                        image.then((value) {
+                          setState(() {
+                            memo.specImage = value;
+                            memo.save();
+                          });
+                        });
+                      },
+                      style: OutlinedButton.styleFrom(
+                          shape: const StadiumBorder()),
+                      child: const Icon(Icons.add_a_photo)),
+                  OutlinedButton(
+                      onPressed: () {
+                        final image = _getImageFromGallery();
+                        image.then((value) {
+                          setState(() {
+                            memo.specImage = value;
+                            memo.save();
+                          });
+                        });
+                      },
+                      style: OutlinedButton.styleFrom(
+                          shape: const StadiumBorder()),
+                      child: const Icon(Icons.photo_library)),
+                ],
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 32, bottom: 0),
+                child: Text(
+                  'その他の写真',
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                ),
+              ),
+              memo.otherImage == null
+                  ? const Text('画像が選択されていません。')
+                  : Image.file(memo.otherImage!),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  OutlinedButton(
+                      onPressed: () {
+                        final image = _getImageFromCamera();
+                        image.then((value) {
+                          setState(() {
+                            memo.otherImage = value;
+                            memo.save();
+                          });
+                        });
+                      },
+                      style: OutlinedButton.styleFrom(
+                          shape: const StadiumBorder()),
+                      child: const Icon(Icons.add_a_photo)),
+                  OutlinedButton(
+                      onPressed: () {
+                        final image = _getImageFromGallery();
+                        image.then((value) {
+                          setState(() {
+                            memo.otherImage = value;
+                            memo.save();
+                          });
+                        });
+                      },
+                      style: OutlinedButton.styleFrom(
+                          shape: const StadiumBorder()),
+                      child: const Icon(Icons.photo_library)),
+                ],
               ),
               TextFormField(
                 initialValue: memo.purchaceStore,
@@ -97,5 +224,31 @@ class _MemoEditPageState extends State<MemoEditPage> {
         firstDate: firstDate,
         lastDate: lastDate);
     return picked;
+  }
+
+  Future<File?> _getImageFromCamera() async {
+    final pickedFile = await imagePicker.pickImage(source: ImageSource.camera);
+    File? imageFile;
+
+    if (pickedFile != null) {
+      imageFile = File(pickedFile.path);
+    } else {
+      imageFile = null;
+    }
+
+    return imageFile;
+  }
+
+  Future<File?> _getImageFromGallery() async {
+    final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+    File? imageFile;
+
+    if (pickedFile != null) {
+      imageFile = File(pickedFile.path);
+    } else {
+      imageFile = null;
+    }
+
+    return imageFile;
   }
 }
