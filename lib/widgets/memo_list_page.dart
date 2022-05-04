@@ -77,14 +77,22 @@ class _MemoListPageState extends State<MemoListPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(children: [
-                      const Padding(
-                          padding: EdgeInsets.only(right: 8),
-                          child: Image(
-                            image: AssetImage('assets/images/1px.png'),
-                            width: 64,
-                            height: 64,
-                            fit: BoxFit.cover,
-                          )),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: memo.labelImage == null
+                            ? const Image(
+                                image: AssetImage('assets/images/1px.png'),
+                                width: 64,
+                                height: 64,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.file(
+                                memo.labelImage!,
+                                width: 64,
+                                height: 64,
+                                fit: BoxFit.cover,
+                              ),
+                      ),
                       Flexible(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
