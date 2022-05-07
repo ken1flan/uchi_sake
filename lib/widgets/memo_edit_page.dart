@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uchi_sake/helpers.dart';
 import 'package:uchi_sake/models/memo.dart';
@@ -194,6 +195,19 @@ class _MemoEditPageState extends State<MemoEditPage> {
                 ),
                 onChanged: (value) {
                   memo.keywordsString = value;
+                  memo.save();
+                },
+              ),
+              TextFormField(
+                initialValue: memo.keywordsString,
+                key: const ValueKey('memoScoreTextField'),
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                decoration: const InputDecoration(
+                  labelText: '評価',
+                ),
+                onChanged: (value) {
+                  memo.score = int.parse(value);
                   memo.save();
                 },
               ),
