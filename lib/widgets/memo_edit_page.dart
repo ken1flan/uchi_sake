@@ -60,9 +60,7 @@ class _MemoEditPageState extends State<MemoEditPage> {
                   style: TextStyle(color: Colors.grey, fontSize: 12),
                 ),
               ),
-              memo.labelImage == null
-                  ? const Text('画像が選択されていません。')
-                  : Image.file(memo.labelImage!),
+              imageViewer(memo.labelImage),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -101,9 +99,7 @@ class _MemoEditPageState extends State<MemoEditPage> {
                   style: TextStyle(color: Colors.grey, fontSize: 12),
                 ),
               ),
-              memo.specImage == null
-                  ? const Text('画像が選択されていません。')
-                  : Image.file(memo.specImage!),
+              imageViewer(memo.specImage),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -142,9 +138,7 @@ class _MemoEditPageState extends State<MemoEditPage> {
                   style: TextStyle(color: Colors.grey, fontSize: 12),
                 ),
               ),
-              memo.otherImage == null
-                  ? const Text('画像が選択されていません。')
-                  : Image.file(memo.otherImage!),
+              imageViewer(memo.otherImage),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -276,5 +270,20 @@ class _MemoEditPageState extends State<MemoEditPage> {
     }
 
     return imageFile;
+  }
+
+  Widget imageViewer(File? image) {
+    if (image == null) {
+      return const Text('画像が選択されていません。');
+    }
+
+    return InteractiveViewer(
+      minScale: 0.1,
+      maxScale: 5,
+      child: Container(
+        child: Image.file(image),
+        color: Colors.black,
+      ),
+    );
   }
 }
