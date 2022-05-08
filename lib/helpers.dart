@@ -11,7 +11,7 @@ String dateTime2yyyymmdd(DateTime? dateTime) {
 Row stars(int? score) {
   const star = Icon(
     Icons.star,
-    color: Color.fromRGBO(253, 216, 53, 1),
+    color: Colors.amber,
     size: 15,
   );
 
