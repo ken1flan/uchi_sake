@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uchi_sake/helpers.dart';
 import 'package:uchi_sake/models/memo.dart';
@@ -198,18 +199,30 @@ class _MemoEditPageState extends State<MemoEditPage> {
                   memo.save();
                 },
               ),
-              TextFormField(
-                initialValue: memo.keywordsString,
-                key: const ValueKey('memoScoreTextField'),
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                decoration: const InputDecoration(
-                  labelText: '評価',
+              const Padding(
+                padding: EdgeInsets.only(top: 16, bottom: 8),
+                child: Text(
+                  '評価',
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
                 ),
-                onChanged: (value) {
-                  memo.score = int.parse(value);
+              ),
+              RatingBar.builder(
+                initialRating: 0,
+                minRating: 0,
+                maxRating: 3,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 3,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 3.0),
+                itemBuilder: (context, _) => const Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                onRatingUpdate: (rating) {
+                  memo.score = rating.toInt();
                   memo.save();
                 },
+                itemSize: 30,
               ),
               TextFormField(
                 initialValue: memo.body,
