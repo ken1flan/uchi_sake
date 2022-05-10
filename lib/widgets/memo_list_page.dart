@@ -52,7 +52,7 @@ class _MemoListPageState extends State<MemoListPage> {
 
   @override
   Widget build(BuildContext context) {
-    memos = isar.memos.where().findAllSync();
+    memos = isar.memos.where(sort: Sort.desc).anyTappedOn().findAllSync();
 
     return Scaffold(
       appBar: AppBar(
