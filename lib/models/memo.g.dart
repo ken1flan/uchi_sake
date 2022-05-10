@@ -17,7 +17,7 @@ extension GetMemoCollection on Isar {
 final MemoSchema = CollectionSchema(
   name: 'Memo',
   schema:
-      '{"name":"Memo","idName":"id","properties":[{"name":"body","type":"String"},{"name":"createdAt","type":"Long"},{"name":"keywords","type":"StringList"},{"name":"keywordsString","type":"String"},{"name":"labelImage","type":"String"},{"name":"name","type":"String"},{"name":"otherImage","type":"String"},{"name":"purchaceStore","type":"String"},{"name":"score","type":"Long"},{"name":"specImage","type":"String"},{"name":"tappedOn","type":"Long"},{"name":"updatedAt","type":"Long"}],"indexes":[],"links":[]}',
+      '{"name":"Memo","idName":"id","properties":[{"name":"body","type":"String"},{"name":"createdAt","type":"Long"},{"name":"keywords","type":"StringList"},{"name":"keywordsString","type":"String"},{"name":"labelImage","type":"String"},{"name":"name","type":"String"},{"name":"otherImage","type":"String"},{"name":"purchaceStore","type":"String"},{"name":"score","type":"Long"},{"name":"specImage","type":"String"},{"name":"tappedOn","type":"Long"},{"name":"updatedAt","type":"Long"}],"indexes":[{"name":"tappedOn","unique":false,"properties":[{"name":"tappedOn","type":"Value","caseSensitive":false}]}],"links":[]}',
   nativeAdapter: const _MemoNativeAdapter(),
   webAdapter: const _MemoWebAdapter(),
   idName: 'id',
@@ -36,8 +36,12 @@ final MemoSchema = CollectionSchema(
     'updatedAt': 11
   },
   listProperties: {'keywords'},
-  indexIds: {},
-  indexTypes: {},
+  indexIds: {'tappedOn': 0},
+  indexTypes: {
+    'tappedOn': [
+      NativeIndexType.long,
+    ]
+  },
   linkIds: {},
   backlinkIds: {},
   linkedCollections: [],
@@ -340,6 +344,10 @@ extension MemoQueryWhereSort on QueryBuilder<Memo, Memo, QWhere> {
   QueryBuilder<Memo, Memo, QAfterWhere> anyId() {
     return addWhereClauseInternal(const WhereClause(indexName: null));
   }
+
+  QueryBuilder<Memo, Memo, QAfterWhere> anyTappedOn() {
+    return addWhereClauseInternal(const WhereClause(indexName: 'tappedOn'));
+  }
 }
 
 extension MemoQueryWhere on QueryBuilder<Memo, Memo, QWhereClause> {
@@ -410,6 +418,97 @@ extension MemoQueryWhere on QueryBuilder<Memo, Memo, QWhereClause> {
       lower: [lowerId],
       includeLower: includeLower,
       upper: [upperId],
+      includeUpper: includeUpper,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterWhereClause> tappedOnEqualTo(
+      DateTime? tappedOn) {
+    return addWhereClauseInternal(WhereClause(
+      indexName: 'tappedOn',
+      lower: [tappedOn],
+      includeLower: true,
+      upper: [tappedOn],
+      includeUpper: true,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterWhereClause> tappedOnNotEqualTo(
+      DateTime? tappedOn) {
+    if (whereSortInternal == Sort.asc) {
+      return addWhereClauseInternal(WhereClause(
+        indexName: 'tappedOn',
+        upper: [tappedOn],
+        includeUpper: false,
+      )).addWhereClauseInternal(WhereClause(
+        indexName: 'tappedOn',
+        lower: [tappedOn],
+        includeLower: false,
+      ));
+    } else {
+      return addWhereClauseInternal(WhereClause(
+        indexName: 'tappedOn',
+        lower: [tappedOn],
+        includeLower: false,
+      )).addWhereClauseInternal(WhereClause(
+        indexName: 'tappedOn',
+        upper: [tappedOn],
+        includeUpper: false,
+      ));
+    }
+  }
+
+  QueryBuilder<Memo, Memo, QAfterWhereClause> tappedOnIsNull() {
+    return addWhereClauseInternal(const WhereClause(
+      indexName: 'tappedOn',
+      upper: [null],
+      includeUpper: true,
+      lower: [null],
+      includeLower: true,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterWhereClause> tappedOnIsNotNull() {
+    return addWhereClauseInternal(const WhereClause(
+      indexName: 'tappedOn',
+      lower: [null],
+      includeLower: false,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterWhereClause> tappedOnGreaterThan(
+    DateTime? tappedOn, {
+    bool include = false,
+  }) {
+    return addWhereClauseInternal(WhereClause(
+      indexName: 'tappedOn',
+      lower: [tappedOn],
+      includeLower: include,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterWhereClause> tappedOnLessThan(
+    DateTime? tappedOn, {
+    bool include = false,
+  }) {
+    return addWhereClauseInternal(WhereClause(
+      indexName: 'tappedOn',
+      upper: [tappedOn],
+      includeUpper: include,
+    ));
+  }
+
+  QueryBuilder<Memo, Memo, QAfterWhereClause> tappedOnBetween(
+    DateTime? lowerTappedOn,
+    DateTime? upperTappedOn, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addWhereClauseInternal(WhereClause(
+      indexName: 'tappedOn',
+      lower: [lowerTappedOn],
+      includeLower: includeLower,
+      upper: [upperTappedOn],
       includeUpper: includeUpper,
     ));
   }
