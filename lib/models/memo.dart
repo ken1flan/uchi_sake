@@ -17,6 +17,7 @@ class Memo {
   File? specImage;
   @FileConverter()
   File? otherImage;
+  @Index()
   DateTime? tappedOn;
   List<String>? keywords;
   String? keywordsString;
