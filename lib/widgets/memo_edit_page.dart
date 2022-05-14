@@ -200,7 +200,7 @@ class _MemoEditPageState extends State<MemoEditPage> {
                 ),
               ),
               RatingBar.builder(
-                initialRating: 0,
+                initialRating: memo.score?.toDouble() ?? 0,
                 minRating: 0,
                 maxRating: 3,
                 direction: Axis.horizontal,
