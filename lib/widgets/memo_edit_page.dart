@@ -29,8 +29,7 @@ class _MemoEditPageState extends State<MemoEditPage> {
           child: ListView(
             children: [
               InkWell(
-                child: Text(
-                    "開栓日 ${dateTime2yyyymmdd(memo.tappedOn ?? DateTime.now())}"),
+                child: Text("開栓日 ${dateTime2yyyymmdd(memo.tappedOn)}"),
                 onTap: () async {
                   DateTime? picked = await _selectDate(memo, context);
                   if (picked != null) {
