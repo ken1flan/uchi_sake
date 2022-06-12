@@ -8,18 +8,18 @@ import 'package:uchi_sake/widgets/memo_edit_page.dart';
 
 void main() {
   wrapTest(() {
-    group('memo = nullのとき', () {
-      const Memo? memo = null;
-      const memoEditPage = MemoEditPage(memo);
+    group('memo = 未保存のとき', () {
+      Memo memo = Memo();
+      MemoEditPage memoEditPage = MemoEditPage(memo);
 
       testWidgets('ページが表示されていること', (WidgetTester tester) async {
-        await tester.pumpWidget(const MaterialApp(home: memoEditPage));
+        await tester.pumpWidget(MaterialApp(home: memoEditPage));
 
         expect(find.text('飲んだお酒のメモ'), findsOneWidget);
       });
 
       testWidgets('記入後に自動的に保存されていること', (WidgetTester tester) async {
-        await tester.pumpWidget(const MaterialApp(home: memoEditPage));
+        await tester.pumpWidget(MaterialApp(home: memoEditPage));
         await tester.enterText(
             find.byKey(const ValueKey('memoNameTextField')), 'お酒の名前');
         // await tester.enterText(

@@ -6,7 +6,7 @@ import 'package:uchi_sake/helpers.dart';
 import 'package:uchi_sake/models/memo.dart';
 
 class MemoEditPage extends StatefulWidget {
-  final Memo? memo;
+  final Memo memo;
   const MemoEditPage(this.memo, {Key? key}) : super(key: key);
 
   @override
@@ -18,7 +18,7 @@ class _MemoEditPageState extends State<MemoEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    Memo memo = widget.memo ?? Memo();
+    Memo memo = widget.memo;
 
     return Scaffold(
         appBar: AppBar(
