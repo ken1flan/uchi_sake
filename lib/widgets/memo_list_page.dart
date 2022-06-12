@@ -15,7 +15,7 @@ class MemoListPage extends StatefulWidget {
 class _MemoListPageState extends State<MemoListPage> {
   List<Memo> memos = [];
 
-  void _openMemo(Memo? memo, BuildContext context) async {
+  void _openMemo(Memo memo, BuildContext context) async {
     await Navigator.push(
         context,
         MaterialPageRoute(
@@ -118,7 +118,7 @@ class _MemoListPageState extends State<MemoListPage> {
               );
             }).toList()),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _openMemo(null, context),
+        onPressed: () => _openMemo(Memo(), context),
         tooltip: 'メモを追加します。',
         child: const Icon(Icons.add),
       ),
