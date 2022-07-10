@@ -28,5 +28,5 @@ samples, guidance on mobile development, and a full API reference.
 ```console
 core_version=`cat .isar_version`
 github="https://github.com/isar/isar-core/releases/download/${core_version}"
-curl "${github}/libisar_macos_x64.dylib" -o ./libisar.dylib --create-dirs -L
+curl "${github}/libisar_macos.dylib" -o ./libisar.dylib --create-dirs -L
 ```
