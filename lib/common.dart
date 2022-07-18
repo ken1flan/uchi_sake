@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:mecab_dart/mecab_dart.dart';
 import 'package:uchi_sake/models/memo.dart';
 
 late Directory applicationDocumentsDirectory;
 late Isar isar;
+late Mecab mecab;
 
 class Common {
   static var schemas = [MemoSchema];
@@ -15,6 +17,8 @@ class Common {
       schemas: schemas,
       directory: applicationDocumentsDirectory.path,
     );
+    mecab = Mecab();
+    await mecab.init('assets/ipadic', true);
   }
 
   // 書き込み確認
