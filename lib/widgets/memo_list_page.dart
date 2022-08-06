@@ -57,6 +57,7 @@ class _MemoListPageState extends State<MemoListPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('飲んだお酒のメモ'),
+        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.search))],
       ),
       body: memos.isEmpty
           ? Center(
