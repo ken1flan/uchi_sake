@@ -46,4 +46,13 @@ class Memo {
       });
     }
   }
+
+  static List<Memo> searchByText(String searchText) {
+    return isar.memos
+        .where(sort: Sort.desc)
+        .anyTappedOn()
+        .filter()
+        .nameContains(searchText)
+        .findAllSync();
+  }
 }

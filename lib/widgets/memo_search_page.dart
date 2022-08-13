@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:isar/isar.dart';
-import 'package:uchi_sake/common.dart';
 import 'package:uchi_sake/models/memo.dart';
 import 'package:uchi_sake/widgets/memo_card.dart';
 import 'package:uchi_sake/widgets/memo_edit_page.dart';
@@ -17,12 +15,7 @@ class _MemoSearchPageState extends State<MemoSearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Memo> memos = isar.memos
-        .where(sort: Sort.desc)
-        .anyTappedOn()
-        .filter()
-        .nameContains(searchText)
-        .findAllSync();
+    List<Memo> memos = Memo.searchByText(searchText);
 
     return Scaffold(
       appBar: AppBar(title: _searchTextField()),
