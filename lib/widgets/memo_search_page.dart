@@ -13,10 +13,16 @@ class MemoSearchPage extends StatefulWidget {
 }
 
 class _MemoSearchPageState extends State<MemoSearchPage> {
+  String searchText = '';
+
   @override
   Widget build(BuildContext context) {
-    List<Memo> memos =
-        isar.memos.where(sort: Sort.desc).anyTappedOn().findAllSync();
+    List<Memo> memos = isar.memos
+        .where(sort: Sort.desc)
+        .anyTappedOn()
+        .filter()
+        .nameContains(searchText)
+        .findAllSync();
 
     return Scaffold(
       appBar: AppBar(title: _searchTextField()),
@@ -39,12 +45,17 @@ class _MemoSearchPageState extends State<MemoSearchPage> {
   }
 
   Widget _searchTextField() {
-    return const TextField(
+    return TextField(
       autofocus: true,
       textInputAction: TextInputAction.search,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: '検索',
       ),
+      onSubmitted: (String searchText) {
+        setState(() {
+          this.searchText = searchText;
+        });
+      },
     );
   }
 
