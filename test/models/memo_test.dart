@@ -125,5 +125,52 @@ void main() {
         });
       });
     });
+
+    group('#searchText', () {
+      List<Memo> memos = [];
+
+      var memoSake = Memo()..name = '日本酒';
+      var memoRedWine = Memo()..name = '赤ワイン';
+      var memoWhiteWine = Memo()..name = '白ワイン';
+
+      setUp(() {
+        memoSake.save();
+        memoRedWine.save();
+        memoWhiteWine.save();
+        memos.add(memoSake);
+        memos.add(memoRedWine);
+        memos.add(memoWhiteWine);
+      });
+
+      group('searchText = ""のとき', () {
+        test('すべてのメモが返されること', () {
+          var ret = Memo.searchByText('');
+          var ids = ret.map((memo) => memo.id).toList();
+          for (var memo in memos) {
+            expect(ids.contains(memo.id), isTrue);
+          }
+        });
+      });
+
+      group('searchText = "酒"のとき', () {
+        test('memoSakeが返されること', () {
+          var ret = Memo.searchByText('酒');
+          var ids = ret.map((memo) => memo.id).toList();
+          expect(ids.contains(memoSake.id), isTrue);
+          expect(ids.contains(memoRedWine.id), isFalse);
+          expect(ids.contains(memoWhiteWine.id), isFalse);
+        });
+      });
+
+      group('searchText = "ワイン"のとき', () {
+        test('memoSakeが返されること', () {
+          var ret = Memo.searchByText('ワイン');
+          var ids = ret.map((memo) => memo.id).toList();
+          expect(ids.contains(memoSake.id), isFalse);
+          expect(ids.contains(memoRedWine.id), isTrue);
+          expect(ids.contains(memoWhiteWine.id), isTrue);
+        });
+      });
+    });
   });
 }

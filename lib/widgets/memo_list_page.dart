@@ -4,6 +4,7 @@ import 'package:uchi_sake/common.dart';
 import 'package:uchi_sake/models/memo.dart';
 import 'package:uchi_sake/widgets/memo_edit_page.dart';
 import 'package:uchi_sake/widgets/memo_card.dart';
+import 'package:uchi_sake/widgets/memo_search_page.dart';
 
 class MemoListPage extends StatefulWidget {
   const MemoListPage({Key? key}) : super(key: key);
@@ -57,6 +58,18 @@ class _MemoListPageState extends State<MemoListPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('飲んだお酒のメモ'),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MemoSearchPage(),
+                    ));
+                setState(() {});
+              },
+              icon: const Icon(Icons.search))
+        ],
       ),
       body: memos.isEmpty
           ? Center(
