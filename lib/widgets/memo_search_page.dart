@@ -49,6 +49,7 @@ class _MemoSearchPageState extends State<MemoSearchPage> {
           this.searchText = searchText;
         });
       },
+      key: const ValueKey('searchTextField'),
     );
   }
 
