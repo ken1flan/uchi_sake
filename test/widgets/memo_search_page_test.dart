@@ -15,7 +15,6 @@ void main() {
       ..score = 3
       ..purchaceStore = "なんとか酒店"
       ..tappedOn = DateTime.now()
-      ..keywords = ['日本酒', '純米' '原酒' '辛口']
       ..keywordsString = "日本酒 純米 原酒 辛口"
       ..body = "今回もたいへん美味しかった！";
     memos['red_wine'] = Memo()
@@ -24,7 +23,6 @@ void main() {
       ..score = 3
       ..purchaceStore = 'リカーショップ・ナントカ'
       ..tappedOn = DateTime.now()
-      ..keywords = ['ワイン', '赤' 'カベルネ・ソーヴィニヨン' 'フルボディ']
       ..keywordsString = 'ワイン 赤 カベルネ・ソーヴィニヨン フルボディ'
       ..body = '今回もたいへん美味しかった！';
     memos['white_wine'] = Memo()
@@ -33,7 +31,6 @@ void main() {
       ..score = 3
       ..purchaceStore = 'リカーショップ・ナントカ'
       ..tappedOn = DateTime.now()
-      ..keywords = ['ワイン', '白' 'シャルドネ' '辛口']
       ..keywordsString = 'ワイン 白 シャルドネ 辛口'
       ..body = '今回もたいへん美味しかった！';
 

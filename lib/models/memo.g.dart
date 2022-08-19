@@ -15,23 +15,22 @@ extension GetMemoCollection on Isar {
 const MemoSchema = CollectionSchema(
   name: 'Memo',
   schema:
-      '{"name":"Memo","idName":"id","properties":[{"name":"body","type":"String"},{"name":"createdAt","type":"Long"},{"name":"keywords","type":"StringList"},{"name":"keywordsString","type":"String"},{"name":"labelImage","type":"String"},{"name":"name","type":"String"},{"name":"otherImage","type":"String"},{"name":"purchaceStore","type":"String"},{"name":"score","type":"Long"},{"name":"specImage","type":"String"},{"name":"tappedOn","type":"Long"},{"name":"updatedAt","type":"Long"}],"indexes":[{"name":"tappedOn","unique":false,"properties":[{"name":"tappedOn","type":"Value","caseSensitive":false}]}],"links":[]}',
+      '{"name":"Memo","idName":"id","properties":[{"name":"body","type":"String"},{"name":"createdAt","type":"Long"},{"name":"keywordsString","type":"String"},{"name":"labelImage","type":"String"},{"name":"name","type":"String"},{"name":"otherImage","type":"String"},{"name":"purchaceStore","type":"String"},{"name":"score","type":"Long"},{"name":"specImage","type":"String"},{"name":"tappedOn","type":"Long"},{"name":"updatedAt","type":"Long"}],"indexes":[{"name":"tappedOn","unique":false,"properties":[{"name":"tappedOn","type":"Value","caseSensitive":false}]}],"links":[]}',
   idName: 'id',
   propertyIds: {
     'body': 0,
     'createdAt': 1,
-    'keywords': 2,
-    'keywordsString': 3,
-    'labelImage': 4,
-    'name': 5,
-    'otherImage': 6,
-    'purchaceStore': 7,
-    'score': 8,
-    'specImage': 9,
-    'tappedOn': 10,
-    'updatedAt': 11
+    'keywordsString': 2,
+    'labelImage': 3,
+    'name': 4,
+    'otherImage': 5,
+    'purchaceStore': 6,
+    'score': 7,
+    'specImage': 8,
+    'tappedOn': 9,
+    'updatedAt': 10
   },
-  listProperties: {'keywords'},
+  listProperties: {},
   indexIds: {'tappedOn': 0},
   indexValueTypes: {
     'tappedOn': [
@@ -82,60 +81,48 @@ void _memoSerializeNative(IsarCollection<Memo> collection, IsarRawObject rawObj,
   dynamicSize += (_body?.length ?? 0) as int;
   final value1 = object.createdAt;
   final _createdAt = value1;
-  final value2 = object.keywords;
-  dynamicSize += (value2?.length ?? 0) * 8;
-  List<IsarUint8List?>? bytesList2;
-  if (value2 != null) {
-    bytesList2 = [];
-    for (var str in value2) {
-      final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-      bytesList2.add(bytes);
-      dynamicSize += bytes.length as int;
-    }
-  }
-  final _keywords = bytesList2;
-  final value3 = object.keywordsString;
+  final value2 = object.keywordsString;
   IsarUint8List? _keywordsString;
-  if (value3 != null) {
-    _keywordsString = IsarBinaryWriter.utf8Encoder.convert(value3);
+  if (value2 != null) {
+    _keywordsString = IsarBinaryWriter.utf8Encoder.convert(value2);
   }
   dynamicSize += (_keywordsString?.length ?? 0) as int;
-  final value4 = _memoFileConverter.toIsar(object.labelImage);
+  final value3 = _memoFileConverter.toIsar(object.labelImage);
   IsarUint8List? _labelImage;
-  if (value4 != null) {
-    _labelImage = IsarBinaryWriter.utf8Encoder.convert(value4);
+  if (value3 != null) {
+    _labelImage = IsarBinaryWriter.utf8Encoder.convert(value3);
   }
   dynamicSize += (_labelImage?.length ?? 0) as int;
-  final value5 = object.name;
+  final value4 = object.name;
   IsarUint8List? _name;
-  if (value5 != null) {
-    _name = IsarBinaryWriter.utf8Encoder.convert(value5);
+  if (value4 != null) {
+    _name = IsarBinaryWriter.utf8Encoder.convert(value4);
   }
   dynamicSize += (_name?.length ?? 0) as int;
-  final value6 = _memoFileConverter.toIsar(object.otherImage);
+  final value5 = _memoFileConverter.toIsar(object.otherImage);
   IsarUint8List? _otherImage;
-  if (value6 != null) {
-    _otherImage = IsarBinaryWriter.utf8Encoder.convert(value6);
+  if (value5 != null) {
+    _otherImage = IsarBinaryWriter.utf8Encoder.convert(value5);
   }
   dynamicSize += (_otherImage?.length ?? 0) as int;
-  final value7 = object.purchaceStore;
+  final value6 = object.purchaceStore;
   IsarUint8List? _purchaceStore;
-  if (value7 != null) {
-    _purchaceStore = IsarBinaryWriter.utf8Encoder.convert(value7);
+  if (value6 != null) {
+    _purchaceStore = IsarBinaryWriter.utf8Encoder.convert(value6);
   }
   dynamicSize += (_purchaceStore?.length ?? 0) as int;
-  final value8 = object.score;
-  final _score = value8;
-  final value9 = _memoFileConverter.toIsar(object.specImage);
+  final value7 = object.score;
+  final _score = value7;
+  final value8 = _memoFileConverter.toIsar(object.specImage);
   IsarUint8List? _specImage;
-  if (value9 != null) {
-    _specImage = IsarBinaryWriter.utf8Encoder.convert(value9);
+  if (value8 != null) {
+    _specImage = IsarBinaryWriter.utf8Encoder.convert(value8);
   }
   dynamicSize += (_specImage?.length ?? 0) as int;
-  final value10 = object.tappedOn;
-  final _tappedOn = value10;
-  final value11 = object.updatedAt;
-  final _updatedAt = value11;
+  final value9 = object.tappedOn;
+  final _tappedOn = value9;
+  final value10 = object.updatedAt;
+  final _updatedAt = value10;
   final size = staticSize + dynamicSize;
 
   rawObj.buffer = alloc(size);
@@ -144,16 +131,15 @@ void _memoSerializeNative(IsarCollection<Memo> collection, IsarRawObject rawObj,
   final writer = IsarBinaryWriter(buffer, staticSize);
   writer.writeBytes(offsets[0], _body);
   writer.writeDateTime(offsets[1], _createdAt);
-  writer.writeStringList(offsets[2], _keywords);
-  writer.writeBytes(offsets[3], _keywordsString);
-  writer.writeBytes(offsets[4], _labelImage);
-  writer.writeBytes(offsets[5], _name);
-  writer.writeBytes(offsets[6], _otherImage);
-  writer.writeBytes(offsets[7], _purchaceStore);
-  writer.writeLong(offsets[8], _score);
-  writer.writeBytes(offsets[9], _specImage);
-  writer.writeDateTime(offsets[10], _tappedOn);
-  writer.writeDateTime(offsets[11], _updatedAt);
+  writer.writeBytes(offsets[2], _keywordsString);
+  writer.writeBytes(offsets[3], _labelImage);
+  writer.writeBytes(offsets[4], _name);
+  writer.writeBytes(offsets[5], _otherImage);
+  writer.writeBytes(offsets[6], _purchaceStore);
+  writer.writeLong(offsets[7], _score);
+  writer.writeBytes(offsets[8], _specImage);
+  writer.writeDateTime(offsets[9], _tappedOn);
+  writer.writeDateTime(offsets[10], _updatedAt);
 }
 
 Memo _memoDeserializeNative(IsarCollection<Memo> collection, int id,
@@ -162,19 +148,18 @@ Memo _memoDeserializeNative(IsarCollection<Memo> collection, int id,
   object.body = reader.readStringOrNull(offsets[0]);
   object.createdAt = reader.readDateTime(offsets[1]);
   object.id = id;
-  object.keywords = reader.readStringList(offsets[2]);
-  object.keywordsString = reader.readStringOrNull(offsets[3]);
+  object.keywordsString = reader.readStringOrNull(offsets[2]);
   object.labelImage =
-      _memoFileConverter.fromIsar(reader.readStringOrNull(offsets[4]));
-  object.name = reader.readStringOrNull(offsets[5]);
+      _memoFileConverter.fromIsar(reader.readStringOrNull(offsets[3]));
+  object.name = reader.readStringOrNull(offsets[4]);
   object.otherImage =
-      _memoFileConverter.fromIsar(reader.readStringOrNull(offsets[6]));
-  object.purchaceStore = reader.readStringOrNull(offsets[7]);
-  object.score = reader.readLongOrNull(offsets[8]);
+      _memoFileConverter.fromIsar(reader.readStringOrNull(offsets[5]));
+  object.purchaceStore = reader.readStringOrNull(offsets[6]);
+  object.score = reader.readLongOrNull(offsets[7]);
   object.specImage =
-      _memoFileConverter.fromIsar(reader.readStringOrNull(offsets[9]));
-  object.tappedOn = reader.readDateTimeOrNull(offsets[10]);
-  object.updatedAt = reader.readDateTime(offsets[11]);
+      _memoFileConverter.fromIsar(reader.readStringOrNull(offsets[8]));
+  object.tappedOn = reader.readDateTimeOrNull(offsets[9]);
+  object.updatedAt = reader.readDateTime(offsets[10]);
   return object;
 }
 
@@ -188,27 +173,25 @@ P _memoDeserializePropNative<P>(
     case 1:
       return (reader.readDateTime(offset)) as P;
     case 2:
-      return (reader.readStringList(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 3:
-      return (reader.readStringOrNull(offset)) as P;
+      return (_memoFileConverter.fromIsar(reader.readStringOrNull(offset)))
+          as P;
     case 4:
-      return (_memoFileConverter.fromIsar(reader.readStringOrNull(offset)))
-          as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 5:
-      return (reader.readStringOrNull(offset)) as P;
+      return (_memoFileConverter.fromIsar(reader.readStringOrNull(offset)))
+          as P;
     case 6:
-      return (_memoFileConverter.fromIsar(reader.readStringOrNull(offset)))
-          as P;
-    case 7:
       return (reader.readStringOrNull(offset)) as P;
-    case 8:
+    case 7:
       return (reader.readLongOrNull(offset)) as P;
-    case 9:
+    case 8:
       return (_memoFileConverter.fromIsar(reader.readStringOrNull(offset)))
           as P;
-    case 10:
+    case 9:
       return (reader.readDateTimeOrNull(offset)) as P;
-    case 11:
+    case 10:
       return (reader.readDateTime(offset)) as P;
     default:
       throw 'Illegal propertyIndex';
@@ -221,7 +204,6 @@ dynamic _memoSerializeWeb(IsarCollection<Memo> collection, Memo object) {
   IsarNative.jsObjectSet(
       jsObj, 'createdAt', object.createdAt.toUtc().millisecondsSinceEpoch);
   IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'keywords', object.keywords);
   IsarNative.jsObjectSet(jsObj, 'keywordsString', object.keywordsString);
   IsarNative.jsObjectSet(
       jsObj, 'labelImage', _memoFileConverter.toIsar(object.labelImage));
@@ -249,10 +231,6 @@ Memo _memoDeserializeWeb(IsarCollection<Memo> collection, dynamic jsObj) {
           .toLocal()
       : DateTime.fromMillisecondsSinceEpoch(0);
   object.id = IsarNative.jsObjectGet(jsObj, 'id');
-  object.keywords = (IsarNative.jsObjectGet(jsObj, 'keywords') as List?)
-      ?.map((e) => e ?? '')
-      .toList()
-      .cast<String>();
   object.keywordsString = IsarNative.jsObjectGet(jsObj, 'keywordsString');
   object.labelImage =
       _memoFileConverter.fromIsar(IsarNative.jsObjectGet(jsObj, 'labelImage'));
@@ -291,11 +269,6 @@ P _memoDeserializePropWeb<P>(Object jsObj, String propertyName) {
           : DateTime.fromMillisecondsSinceEpoch(0)) as P;
     case 'id':
       return (IsarNative.jsObjectGet(jsObj, 'id')) as P;
-    case 'keywords':
-      return ((IsarNative.jsObjectGet(jsObj, 'keywords') as List?)
-          ?.map((e) => e ?? '')
-          .toList()
-          .cast<String>()) as P;
     case 'keywordsString':
       return (IsarNative.jsObjectGet(jsObj, 'keywordsString')) as P;
     case 'labelImage':
@@ -695,125 +668,6 @@ extension MemoQueryFilter on QueryBuilder<Memo, Memo, QFilterCondition> {
       includeLower: includeLower,
       upper: upper,
       includeUpper: includeUpper,
-    ));
-  }
-
-  QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
-      property: 'keywords',
-      value: null,
-    ));
-  }
-
-  QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsAnyIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'keywords',
-      value: null,
-    ));
-  }
-
-  QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsAnyEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'keywords',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsAnyGreaterThan(
-    String? value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'keywords',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsAnyLessThan(
-    String? value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'keywords',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsAnyBetween(
-    String? lower,
-    String? upper, {
-    bool caseSensitive = true,
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'keywords',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsAnyStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'keywords',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsAnyEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'keywords',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsAnyContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'keywords',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<Memo, Memo, QAfterFilterCondition> keywordsAnyMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'keywords',
-      value: pattern,
-      caseSensitive: caseSensitive,
     ));
   }
 
@@ -1905,10 +1759,6 @@ extension MemoQueryProperty on QueryBuilder<Memo, Memo, QQueryProperty> {
 
   QueryBuilder<Memo, int?, QQueryOperations> idProperty() {
     return addPropertyNameInternal('id');
-  }
-
-  QueryBuilder<Memo, List<String>?, QQueryOperations> keywordsProperty() {
-    return addPropertyNameInternal('keywords');
   }
 
   QueryBuilder<Memo, String?, QQueryOperations> keywordsStringProperty() {

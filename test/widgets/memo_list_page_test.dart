@@ -25,8 +25,6 @@ void main() {
         ..score = i % 5 + 1
         ..purchaceStore = "なんとか酒店${i.toString()}号店"
         ..tappedOn = DateTime.now()
-        ..keywords = ['日本酒', '純米' '原酒' '辛口' "${i.toString()}回目"]
-        ..keywordsString = "日本酒 純米 原酒 辛口 ${i.toString()}回目"
         ..body = "${i.toString()}回目！今回もたいへん美味しかった！";
 
       setUp(() {
@@ -74,7 +72,6 @@ void main() {
             ..score = i % 5 + 1
             ..purchaceStore = "なんとか酒店${i.toString()}号店"
             ..tappedOn = DateTime.now()
-            ..keywords = ['日本酒', '純米' '原酒' '辛口' "${i.toString()}回目"]
             ..keywordsString = "日本酒 純米 原酒 辛口 ${i.toString()}回目"
             ..body = "${i.toString()}回目！今回もたいへん美味しかった！";
           memos.add(memo);

@@ -26,7 +26,6 @@ class Common {
       memo.score = i % 5 + 1;
       memo.purchaceStore = "なんとか酒店${i.toString()}号店";
       memo.tappedOn = DateTime.now();
-      memo.keywords = ['日本酒', '純米' '原酒' '辛口' "${i.toString()}回目"];
       memo.keywordsString = "日本酒 純米 原酒 辛口 ${i.toString()}回目";
       memo.body = "${i.toString()}回目！今回kもたいへん美味しかった！";
       isar.writeTxnSync((isar) => {memo.id = isar.memos.putSync(memo)});
