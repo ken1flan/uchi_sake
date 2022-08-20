@@ -19,7 +19,6 @@ class Memo {
   File? otherImage;
   @Index()
   DateTime? tappedOn;
-  List<String>? keywords;
   String? keywordsString;
   int? score;
   String? purchaceStore;

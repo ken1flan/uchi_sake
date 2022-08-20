@@ -23,7 +23,6 @@ void main() {
           expect(savedMemo.specImage, isNull);
           expect(savedMemo.otherImage, isNull);
           expect(savedMemo.tappedOn, isNull);
-          expect(savedMemo.keywords, isNull);
           expect(savedMemo.keywordsString, isNull);
           expect(savedMemo.score, isNull);
           expect(savedMemo.purchaceStore, isNull);
@@ -36,7 +35,6 @@ void main() {
           memo = Memo()
             ..name = 'お酒のなまえ'
             ..tappedOn = DateTime.parse('2022-01-02')
-            ..keywords = ['日本酒', '純米', '辛口']
             ..keywordsString = '日本酒 純米 辛口'
             ..score = 3
             ..purchaceStore = 'なんとか酒店'
@@ -50,7 +48,6 @@ void main() {
           expect(savedMemo!.createdAt, equals(savedMemo.updatedAt));
           expect(savedMemo.name, equals('お酒のなまえ'));
           expect(dateTime2yyyymmdd(savedMemo.tappedOn), equals('2022/1/2'));
-          expect(savedMemo.keywords, equals(['日本酒', '純米', '辛口']));
           expect(savedMemo.keywordsString, equals('日本酒 純米 辛口'));
           expect(savedMemo.score, equals(3));
           expect(savedMemo.purchaceStore, equals('なんとか酒店'));
@@ -63,7 +60,6 @@ void main() {
           memo = Memo()
             ..name = 'お酒のなまえ'
             ..tappedOn = DateTime.parse('2022-01-02')
-            ..keywords = ['日本酒', '純米', '辛口']
             ..keywordsString = '日本酒 純米 辛口'
             ..score = 3
             ..purchaceStore = 'なんとか酒店'
@@ -72,7 +68,6 @@ void main() {
           memo
             ..name = 'お酒のなまえ(変更)'
             ..tappedOn = DateTime.parse('2021-01-02')
-            ..keywords = ['日本酒', '純米', '辛口', '変更']
             ..keywordsString = '日本酒 純米 辛口 変更'
             ..score = 3
             ..purchaceStore = 'なんとか酒店(変更)'
@@ -86,7 +81,6 @@ void main() {
           expect(savedMemo!.createdAt, isNot(equals(savedMemo.updatedAt)));
           expect(savedMemo.name, equals('お酒のなまえ(変更)'));
           expect(dateTime2yyyymmdd(savedMemo.tappedOn), equals('2021/1/2'));
-          expect(savedMemo.keywords, equals(['日本酒', '純米', '辛口', '変更']));
           expect(savedMemo.keywordsString, equals('日本酒 純米 辛口 変更'));
           expect(savedMemo.score, equals(3));
           expect(savedMemo.purchaceStore, equals('なんとか酒店(変更)'));
