@@ -129,9 +129,15 @@ void main() {
     group('#searchText', () {
       List<Memo> memos = [];
 
-      var memoSake = Memo()..name = '日本酒';
-      var memoRedWine = Memo()..name = '赤ワイン';
-      var memoWhiteWine = Memo()..name = '白ワイン';
+      var memoSake = Memo()
+        ..name = '日本酒'
+        ..body = '刺し身とあいました。';
+      var memoRedWine = Memo()
+        ..name = '赤ワイン'
+        ..body = '肉料理とあわせると美味しさが拡がります。物によってはチーズもよく会います';
+      var memoWhiteWine = Memo()
+        ..name = '白ワイン'
+        ..body = '魚料理とあわせるとよいです。チーズも全然ありです！';
 
       setUp(() {
         memoSake.save();
@@ -163,8 +169,27 @@ void main() {
       });
 
       group('searchText = "ワイン"のとき', () {
-        test('memoSakeが返されること', () {
+        test('memoRedWineとmemoWhiteWineが返されること', () {
           var ret = Memo.searchByText('ワイン');
+          var ids = ret.map((memo) => memo.id).toList();
+          expect(ids.contains(memoSake.id), isFalse);
+          expect(ids.contains(memoRedWine.id), isTrue);
+          expect(ids.contains(memoWhiteWine.id), isTrue);
+        });
+      });
+      group('searchText = "刺し身"のとき', () {
+        test('memoSakeが返されること', () {
+          var ret = Memo.searchByText('刺し身');
+          var ids = ret.map((memo) => memo.id).toList();
+          expect(ids.contains(memoSake.id), isTrue);
+          expect(ids.contains(memoRedWine.id), isFalse);
+          expect(ids.contains(memoWhiteWine.id), isFalse);
+        });
+      });
+
+      group('searchText = "チーズ"のとき', () {
+        test('memoRedWineとmemoWhiteWineが返されること', () {
+          var ret = Memo.searchByText('チーズ');
           var ids = ret.map((memo) => memo.id).toList();
           expect(ids.contains(memoSake.id), isFalse);
           expect(ids.contains(memoRedWine.id), isTrue);
