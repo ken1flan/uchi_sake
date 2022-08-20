@@ -131,12 +131,15 @@ void main() {
 
       var memoSake = Memo()
         ..name = '日本酒'
+        ..keywordsString = '辛口 純米酒 生 新潟'
         ..body = '刺し身とあいました。';
       var memoRedWine = Memo()
         ..name = '赤ワイン'
+        ..keywordsString = 'フルボディ カベルネ・ソーヴィニヨン フランス'
         ..body = '肉料理とあわせると美味しさが拡がります。物によってはチーズもよく会います';
       var memoWhiteWine = Memo()
         ..name = '白ワイン'
+        ..keywordsString = '辛口 イタリア シャルドネ'
         ..body = '魚料理とあわせるとよいです。チーズも全然ありです！';
 
       setUp(() {
@@ -193,6 +196,26 @@ void main() {
           var ids = ret.map((memo) => memo.id).toList();
           expect(ids.contains(memoSake.id), isFalse);
           expect(ids.contains(memoRedWine.id), isTrue);
+          expect(ids.contains(memoWhiteWine.id), isTrue);
+        });
+      });
+
+      group('searchText = "フルボディ"のとき', () {
+        test('memoRedWineが返されること', () {
+          var ret = Memo.searchByText('フルボディ');
+          var ids = ret.map((memo) => memo.id).toList();
+          expect(ids.contains(memoSake.id), isFalse);
+          expect(ids.contains(memoRedWine.id), isTrue);
+          expect(ids.contains(memoWhiteWine.id), isFalse);
+        });
+      });
+
+      group('searchText = "辛口"のとき', () {
+        test('memoSakeとmemoWhiteWineが返されること', () {
+          var ret = Memo.searchByText('辛口');
+          var ids = ret.map((memo) => memo.id).toList();
+          expect(ids.contains(memoSake.id), isTrue);
+          expect(ids.contains(memoRedWine.id), isFalse);
           expect(ids.contains(memoWhiteWine.id), isTrue);
         });
       });

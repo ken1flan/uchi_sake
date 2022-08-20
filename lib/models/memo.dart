@@ -54,6 +54,8 @@ class Memo {
         .filter()
         .nameContains(searchText)
         .or()
+        .keywordsStringContains(searchText)
+        .or()
         .bodyContains(searchText)
         .findAllSync();
   }
