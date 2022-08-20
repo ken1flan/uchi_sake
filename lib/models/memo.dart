@@ -52,6 +52,10 @@ class Memo {
         .anyTappedOn()
         .filter()
         .nameContains(searchText)
+        .or()
+        .keywordsStringContains(searchText)
+        .or()
+        .bodyContains(searchText)
         .findAllSync();
   }
 }
