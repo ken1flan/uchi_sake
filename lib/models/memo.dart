@@ -51,11 +51,12 @@ class Memo {
         .where(sort: Sort.desc)
         .anyTappedOn()
         .filter()
-        .nameContains(searchText)
-        .or()
-        .keywordsStringContains(searchText)
-        .or()
-        .bodyContains(searchText)
+        .group((q) => q
+            .nameContains(searchText)
+            .or()
+            .keywordsStringContains(searchText)
+            .or()
+            .bodyContains(searchText))
         .findAllSync();
   }
 }
