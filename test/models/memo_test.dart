@@ -155,6 +155,16 @@ void main() {
         });
       });
 
+      group('searchText = "焼酎"のとき', () {
+        test('memoSakeが返されること', () {
+          var ret = Memo.searchByText('焼酎');
+          var ids = ret.map((memo) => memo.id).toList();
+          expect(ids.contains(memoSake.id), isFalse);
+          expect(ids.contains(memoRedWine.id), isFalse);
+          expect(ids.contains(memoWhiteWine.id), isFalse);
+        });
+      });
+
       group('searchText = "酒"のとき', () {
         test('memoSakeが返されること', () {
           var ret = Memo.searchByText('酒');
@@ -209,6 +219,26 @@ void main() {
           var ret = Memo.searchByText('辛口');
           var ids = ret.map((memo) => memo.id).toList();
           expect(ids.contains(memoSake.id), isTrue);
+          expect(ids.contains(memoRedWine.id), isFalse);
+          expect(ids.contains(memoWhiteWine.id), isTrue);
+        });
+      });
+
+      group('searchText = "甘口 ワイン"のとき', () {
+        test('memoSakeとmemoWhiteWineが返されること', () {
+          var ret = Memo.searchByText('甘口 ワイン');
+          var ids = ret.map((memo) => memo.id).toList();
+          expect(ids.contains(memoSake.id), isFalse);
+          expect(ids.contains(memoRedWine.id), isFalse);
+          expect(ids.contains(memoWhiteWine.id), isFalse);
+        });
+      });
+
+      group('searchText = "辛口 ワイン"のとき', () {
+        test('memoSakeとmemoWhiteWineが返されること', () {
+          var ret = Memo.searchByText('辛口 ワイン');
+          var ids = ret.map((memo) => memo.id).toList();
+          expect(ids.contains(memoSake.id), isFalse);
           expect(ids.contains(memoRedWine.id), isFalse);
           expect(ids.contains(memoWhiteWine.id), isTrue);
         });

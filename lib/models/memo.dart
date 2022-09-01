@@ -47,15 +47,20 @@ class Memo {
   }
 
   static List<Memo> searchByText(String searchText) {
+    var words = searchText.split(' ');
     return isar.memos
         .where(sort: Sort.desc)
         .anyTappedOn()
         .filter()
-        .nameContains(searchText)
-        .or()
-        .keywordsStringContains(searchText)
-        .or()
-        .bodyContains(searchText)
+        .nameContains('')
+        .repeat(
+            words,
+            (wordQ, String word) => wordQ.and().group((q) => q
+                .nameContains(word)
+                .or()
+                .keywordsStringContains(word)
+                .or()
+                .bodyContains(word)))
         .findAllSync();
   }
 }
